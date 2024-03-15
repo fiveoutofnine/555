@@ -11,7 +11,7 @@ contract PrintDataScript is Script {
     // Script `run()`
     // -------------------------------------------------------------------------
 
-    function run() public {
+    function run() public view {
         for (uint256 i = 325; i < 336; ) {
             uint256 mileage = FiveFiveFiveData.getDayMileage(i);
             (string memory location, ) = FiveFiveFiveData.getDayLocation(i);
