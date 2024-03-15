@@ -453,7 +453,7 @@ library FiveFiveFiveArt {
                 '"}'
             );
         }
-
+        return string(svgData);
         return
             string.concat(
                 "data:json/application;base64,",

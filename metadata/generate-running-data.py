@@ -563,7 +563,7 @@ mileage_string = """15.96
 22.94
 21.31""".split('\n')
 
-mileage = [int(float(m) * 100) for m in mileage_string]
+mileage = [int(m.replace(".", "")) for m in mileage_string]
 
 for m in mileage:
     data <<= 12 # We can just shift left by 12 because we know the first element is not 0.
