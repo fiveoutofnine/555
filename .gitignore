@@ -16,5 +16,9 @@ docs/
 # Preview
 script/preview/
 
+# Script output files
+/output/svg/**
+/output/txt/**
+
 # Mac
 .DS_STORE

@@ -4,6 +4,12 @@ out = "out"
 libs = ["lib"]
 solc = "0.8.21"
 optimizer_runs = 1000000
+via-ir = true
+fs_permissions = [
+    { access = "read-write", path = "./deployments/31337/data" },
+    { access = "read", path = "./out" },
+    { access = "read-write", path = "./output" },
+]
 remappings = [
     "transmissions11/solmate/=lib/solmate/src/",
     "forge-std/=lib/forge-std/src/",
