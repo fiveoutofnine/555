@@ -176,7 +176,7 @@ library FiveFiveFiveArt {
                 _id.toString(),
                 '.","image_data":"data:image/svg+xml;charset=utf-8;base64,',
                 Base64.encode(svgData),
-                '", "animation_data":"data:text/html;charset=utf-8;base64,',
+                '","animation_data":"data:text/html;charset=utf-8;base64,',
                 Base64.encode(htmlData),
                 '"}'
             );
