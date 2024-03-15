@@ -225,7 +225,8 @@ library FiveFiveFiveArt {
         "VQSKu04TRqshTvZMkh1IoU6XJOpkUKiSuVcw/b6gAQYJFi5Upy1BZYot19gdKJTp3FSWaW"
         "PV5fc/8BSkWLliQCApBSiJBTu4+DWadiww5zelw/f6GW6jt/Sz/J+7uzAQAAAA=)}pre{f"
         "ont-family:A;background:#161616;width:280px;padding:0 8px;margin:0;hei"
-        "ght:188px;display:flex;}code{font-size:12px;margin:auto}";
+        "ght:188px;display:flex;}code{font-size:12px;margin:auto}span{font-vari"
+        "ant-ligatures:none}";
 
     // -------------------------------------------------------------------------
     // `render` function
@@ -277,7 +278,7 @@ library FiveFiveFiveArt {
                 uint256(SUBTEXT_COLOR).toHexStringNoPrefix(3),
                 "}.v{color:#",
                 uint256(PRIMARY_COLOR).toHexStringNoPrefix(3),
-                "}.e{color:#", // e
+                "}.e{color:#",
                 uint256(LABEL_COLOR).toHexStringNoPrefix(3),
                 "}.o{color:#",
                 uint256(INTENT_ONE_COLOR).toHexStringNoPrefix(3),
@@ -285,9 +286,9 @@ library FiveFiveFiveArt {
                 uint256(INTENT_TWO_COLOR).toHexStringNoPrefix(3),
                 "}.t{color:#",
                 uint256(INTENT_THREE_COLOR).toHexStringNoPrefix(3),
-                "}.O{color:#",
+                "}.x{color:#",
                 uint256(INTENT_FOUR_COLOR).toHexStringNoPrefix(3),
-                "}.F{font-family:A}.n{font-family:B}.I{position:absolute;margin"
+                "}.y{font-family:A}.n{font-family:B}.z{position:absolute;margin"
                 ":auto 0;border-radius:100%;top:6px;width:12px;height:12px}</st"
                 "yle>"
             )
@@ -305,73 +306,73 @@ library FiveFiveFiveArt {
                 unicode'dadada;padding-left:6px;padding-right:6px"><code style='
                 unicode'"font-family:C;margin:auto;color:#484848">1000 × ⁵⁄₉ = '
                 unicode'555 — 36×11</code><div style="background:#ed6a5e;left:6'
-                unicode'px" class="I"></div><div style="background:#f5bf4f;left'
-                unicode':22px" class="I"></div><div style="background:#62c555;l'
-                unicode'eft:38px" class="I"></div></div><pre><code class="F v">'
+                unicode'px" class="z"></div><div style="background:#f5bf4f;left'
+                unicode':22px" class="z"></div><div style="background:#62c555;l'
+                unicode'eft:38px" class="z"></div></div><pre><code class="y v">'
                 unicode'┌─<span class="n e">day</span>─╥─<span class="n e">mile'
                 unicode'age</span>─╥─<span class="n e">location</span>─────────'
                 unicode"┐\n│ ",
                 id < 10
-                    ? '<span class="F i">00</span>'
+                    ? '<span class="y i">00</span>'
                     : id < 100
-                        ? '<span class="F i">0</span>'
+                        ? '<span class="y i">0</span>'
                         : "",
                 '<span class="n f">',
                 id.toString(),
                 unicode'</span> ║ <span class="n f">',
                 km < 10 ? " " : "",
                 km.toString(),
-                '<span class="F i">.</span>',
+                '<span class="y i">.</span>',
                 m < 10 ? "0" : "",
                 m.toString(),
-                unicode'<span class="F i">km</span></span> ║ <span class="n f">',
+                unicode'<span class="y i">km</span></span> ║ <span class="n f">',
                 locationName,
                 "</span>",
                 LibString.repeat(" ", 17 - locationLength),
                 unicode"│\n└─────╨─────────╨──────────────────┘\n┌─<span class="
-                unicode'"n e">7d<span class="F v">─</span>workload</span>──────'
+                unicode'"n e">7d<span class="y v">─</span>workload</span>──────'
                 unicode"───────",
                 workloadKm < 100 ? unicode"─" : "",
                 '<span class="n f">',
                 workloadKm.toString(),
-                '<span class="F i">.</span>',
+                '<span class="y i">.</span>',
                 workloadM < 10 ? "0" : "",
                 workloadM.toString(),
-                unicode'<span class="F i">km</span></span>─┐\n│ <span class="F '
+                unicode'<span class="y i">km</span></span>─┐\n│ <span class="y '
                 unicode'f">080 <span class="o">',
                 getWorkloadSegment(workloadBars < 6 ? workloadBars : 6),
                 '</span><span class="u">',
                 workloadBars > 11 ? unicode"▮▮▮▮▮▮" : "",
-                workloadBars < 7 ? unicode"______" : "",
+                workloadBars < 7 ? unicode"......" : "",
                 workloadBars > 6 && workloadBars < 12
                     ? getWorkloadSegment(workloadBars - 6)
                     : "",
                 '</span><span class="t">',
                 workloadBars > 17 ? unicode"▮▮▮▮▮▮" : "",
-                workloadBars < 13 ? unicode"______" : "",
+                workloadBars < 13 ? unicode"......" : "",
                 workloadBars > 12 && workloadBars < 18
                     ? getWorkloadSegment(workloadBars - 12)
                     : "",
-                '</span><span class="O">',
+                '</span><span class="x">',
                 workloadBars > 23 ? unicode"▮▮▮▮▮▮" : "",
-                workloadBars < 19 ? unicode"______" : "",
+                workloadBars < 19 ? unicode"......" : "",
                 workloadBars > 18 && workloadBars < 24
                     ? getWorkloadSegment(workloadBars - 18)
                     : "",
                 unicode"</span> 192</span> │\n└────────────────────────────────"
                 unicode'──┘\n┌─<span class="n e">bytebeat</span>───────────────'
                 unicode'──────────┐\n│ ► <span class="n f">gonna fly now <span '
-                unicode'class="F i">from</span> rocky</span>       │\n│ <span c'
-                unicode'lass="F i"><span class="n f">32</span>kHz <span class="'
-                unicode'i f">31</span>.<span class="n f">25</span>kbps    [<spa'
+                unicode'class="y i">from</span> rocky</span>       │\n│ <span c'
+                unicode'lass="y i"><span class="n f">32</span>kHz <span class="'
+                unicode'n f">31</span>.<span class="n f">25</span>kbps    [<spa'
                 unicode'n class="f">0</span>:<span class="f">00</span> / <span '
                 unicode'class="f">0</span>:<span class="f">25</span>]</span> │',
-                unicode'\n│ <span class="F i"><span class="f">━</span>─────────'
-                unicode'───────────────</span> <span class="F f" id="E" style="'
-                unicode"background:#",
+                unicode'\n│ <span class="y i"><span class="f">━</span>─────────'
+                unicode'───────────────</span> <span id="E" class="y f" style="'
+                unicode"cursor:pointer;background:#",
                 uint256(PRIMARY_COLOR).toHexStringNoPrefix(3),
-                unicode'">[PLAY]</span> │\n└──────────────────────────────────┘'
-                unicode"</code></pre></div>"
+                unicode'">[PLAY]</span> │\n└─────────────────────────────────'
+                unicode"─┘</code></pre></div>"
             )
         );
 
@@ -452,13 +453,12 @@ library FiveFiveFiveArt {
                 '"}'
             );
         }
-        return string(svgData);
 
-        /* return
+        return
             string.concat(
                 "data:json/application;base64,",
                 Base64.encode(jsonData)
-            ); */
+            );
     }
 
     function getWorkloadSegment(
@@ -467,7 +467,7 @@ library FiveFiveFiveArt {
         return
             string.concat(
                 LibString.repeat(unicode"▮", _count),
-                LibString.repeat(unicode"_", 6 - _count)
+                LibString.repeat(unicode".", 6 - _count)
             );
     }
 }

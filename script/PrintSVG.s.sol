@@ -17,7 +17,7 @@ contract PrintDataScript is Script {
     function run() public {
         for (uint256 i = 325; i < 336; ) {
             vm.writeFile(
-                string.concat("./output/svg/", (i + 1).toString(), ".svg"),
+                string.concat("./output/txt/", (i + 1).toString(), ".txt"),
                 FiveFiveFiveArt.render(i)
             );
 
