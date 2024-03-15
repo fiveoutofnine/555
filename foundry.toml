@@ -1,0 +1,28 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc = "0.8.21"
+optimizer_runs = 1000000
+remappings = [
+    "transmissions11/solmate/=lib/solmate/src/",
+    "forge-std/=lib/forge-std/src/",
+    "solady/=lib/solady/src/",
+]
+
+[fmt]
+line_length = 100
+tab_width = 4
+bracket_spacing = true
+int_types = "long"
+func_attrs_with_params_multiline = false
+quote_style = "double"
+number_underscore = "thousands"
+
+[etherscan]
+base = { key = "${BASESCAN_API_KEY}", url = "https://api.basescan.org/api" }
+base_sepolia = { key = "${BASESCAN_API_KEY}", url = "https://api-sepolia.basescan.org/api" }
+
+[rpc_endpoints]
+base = "${RPC_URL_BASE_MAINNET}"
+base_sepolia = "${RPC_URL_BASE_SEPOLIA}"
