@@ -12,8 +12,11 @@ contract PrintDataScript is Script {
     // -------------------------------------------------------------------------
 
     function run() public {
-        for (uint256 i = 0; i < 10; ) {
-            console.log(FiveFiveFiveData.getDayMileage(i));
+        for (uint256 i = 325; i < 336; ) {
+            uint256 mileage = FiveFiveFiveData.getDayMileage(i);
+            (string memory location, ) = FiveFiveFiveData.getDayLocation(i);
+            console.log(i, mileage, location);
+
             unchecked {
                 ++i;
             }

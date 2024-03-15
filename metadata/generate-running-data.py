@@ -569,12 +569,11 @@ for m in mileage:
     data <<= 12 # We can just shift left by 12 because we know the first element is not 0.
     data |= m & 0xfff
 
-# Test the bitmap
+# Test
 for i in range(555):
     value = mileage[i]
     data_i = 554 - i
     data_value = (data >> (12 * data_i)) & 0xfff if i != 374 else 5002
-    if value != data_value:
-        raise ValueError(f"Error at day w/ index {i}! `{value} != {data_value}`")
+    assert value == data_value, f"Error at day w/ index {i}: expected {value}, got {data_value}`"
 
-print(hex(value))
+print(hex(data))

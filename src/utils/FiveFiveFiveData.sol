@@ -6,6 +6,22 @@ library FiveFiveFiveData {
     // Constants
     // -------------------------------------------------------------------------
 
+    /// @notice A bitpacked value of the city the run took place in on each day.
+    /// Each day's city is represented by 4 bits, and the data for some
+    /// 0-indexed day `i` is stored at bits `[4 * i + 4, 4 * i + 8)`. See
+    /// {FiveFiveFiveData.getDayLocation} for the corresponding name mappings.
+    /// @dev Note that the hex dump has a beginning offset of 4 bits.
+    bytes internal constant LOCATION_DATA =
+        hex"000000000000000000000000000000000000000000000000000000000000000001"
+        hex"111110000222222222222222222222222222222222222222222222222222222222"
+        hex"222333333330000000000000000000000000000000000000000004000000000000"
+        hex"000000005566666666666666666666666666666666666666666000000000000000"
+        hex"0000022222222777772222222222000000000000000000000000000008888889a9"
+        hex"00000000000000000000000000000bbbccc0000000000000000000000000002222"
+        hex"2222222ddd22222000000000000000000000000000000000000000000000000000"
+        hex"0000000000000000000222eeeee222222222222222222222222222222222200000"
+        hex"0000000000000000fffffffff000";
+
     /// @notice A bitpacked value of 100 times to the kilometer mileage value
     /// ran on each day. Each day's mileage is represented by 12 bits, and the
     /// data for some 0-indexed day `i` is stored at bits
@@ -46,6 +62,46 @@ library FiveFiveFiveData {
     // -------------------------------------------------------------------------
     // Functions
     // -------------------------------------------------------------------------
+
+    /// @notice Returns the name of the city the run took place in on a given
+    /// day.
+    /// @dev Valid values for `_day` are in `[0, 554]`. The function does not
+    /// handle invalid `_day` values.
+    /// @param _day 0-indexed day to get the location data for.
+    /// @return string memory The name of the city the run took place.
+    /// @return uint256 The length of the city's name.
+    function getDayLocation(
+        uint256 _day
+    ) internal pure returns (string memory, uint256) {
+        // The corresponding location data is stored at bits
+        // `[4 * _day + 4, 4 * _day + 8)`, so the index of the byte we want to
+        // retrieve is `(4 * _ day + 4) >> 3`, which is equivalent to
+        // `(_day + 1) >> 1`.
+        uint256 index;
+        assembly {
+            // Equivalent to `index = (_day + 1) >> 1`.
+            index := shr(1, add(_day, 1))
+        }
+        uint256 value = (uint8(LOCATION_DATA[index]) >>
+            (_day & 1 == 0 ? 0 : 4)) & 0xf;
+
+        if (value == 0) return ("new york city", 13);
+        if (value == 1) return ("san francisco", 13);
+        if (value == 2) return ("seoul", 5);
+        if (value == 3) return ("huntington beach", 16);
+        if (value == 4) return ("westminister", 12);
+        if (value == 5) return ("milan", 5);
+        if (value == 6) return (unicode"luštica bay", 11);
+        if (value == 7) return ("shanghai", 8);
+        if (value == 8) return ("paris", 5);
+        if (value == 9) return (unicode"reykjavík", 9);
+        if (value == 10) return ("selfoss", 7);
+        if (value == 11) return ("scotts valley", 13);
+        if (value == 12) return ("redwood city", 12);
+        if (value == 13) return ("jeju", 4);
+        if (value == 14) return ("kagoshima", 9);
+        return ("denver", 6);
+    }
 
     /// @notice Returns 100 times the kilometer mileage value ran on a given
     /// day.
