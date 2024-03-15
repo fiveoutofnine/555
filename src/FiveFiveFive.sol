@@ -45,6 +45,9 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
     // Storage
     // -------------------------------------------------------------------------
 
+    /// @inheritdoc IFiveFiveFive
+    string public override baseURI;
+
     /// @notice The next token ID to be minted.
     /// @dev The valid tokens to be minted are `[1, 555]`. Since `[1, 52]` are
     /// minted in the constructor, the next token ID to be minted is 53. Note
@@ -53,8 +56,8 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
     /// `_nextTokenId` is 375, 459, or 555, it will increment by 2 instead of 1.
     uint256 internal _nextTokenId = 53;
 
-    /// @inheritdoc IFiveFiveFive
-    string public override baseURI;
+    /// @notice A mapping of token IDs to their themes.
+    mapping(uint256 => Theme) internal _themes;
 
     // -------------------------------------------------------------------------
     // Constructor + functions
@@ -130,7 +133,7 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
         uint256 tokenId = _nextTokenId;
 
         // Minting is complete.
-        if (tokenId > 555) revert InvalidTokenId();
+        if (tokenId > 555) revert MintingEnded();
         // Revert if the sender didn't supply enough funds.
         if (msg.value < PRICE) revert InsufficientFunds();
 
@@ -156,6 +159,76 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
     function withdraw(address _to) external override onlyOwner {
         (bool success, ) = payable(_to).call{value: address(this).balance}("");
         require(success);
+    }
+
+    // -------------------------------------------------------------------------
+    // Color theming
+    // -------------------------------------------------------------------------
+
+    /// @inheritdoc IFiveFiveFive
+    function getTokenTheme(
+        uint256 _id
+    ) external view override returns (Theme memory) {
+        // Revert if the token hasn't been minted.
+        if (_ownerOf[_id] == address(0)) revert TokenUnminted();
+
+        Theme memory theme = _themes[_id];
+        // Return the default theme if the theme was never set.
+        if (!theme.modified) {
+            return
+                Theme({
+                    background: 0x000000,
+                    terminalBackground: 0x161616,
+                    primary: 0x0090ff,
+                    text: 0xededed,
+                    subtext: 0xa0a0a0,
+                    label: 0xff8b3e,
+                    intent1: 0x4cc38a,
+                    intent2: 0xf0c000,
+                    intent3: 0xff8b3e,
+                    intent4: 0xff6369,
+                    modified: false
+                });
+        }
+
+        return theme;
+    }
+
+    /// @inheritdoc IFiveFiveFive
+    function setTokenTheme(
+        uint256 _id,
+        uint24 _background,
+        uint24 _terminalBackground,
+        uint24 _primary,
+        uint24 _text,
+        uint24 _subtext,
+        uint24 _label,
+        uint24 _intent1,
+        uint24 _intent2,
+        uint24 _intent3,
+        uint24 _intent4
+    ) external override {
+        // Revert if the sender is not the owner of the token.
+        if (_ownerOf[_id] != msg.sender) revert Unauthorized();
+
+        // Set new token theme.
+        Theme memory theme = Theme({
+            background: _background,
+            terminalBackground: _terminalBackground,
+            primary: _primary,
+            text: _text,
+            subtext: _subtext,
+            label: _label,
+            intent1: _intent1,
+            intent2: _intent2,
+            intent3: _intent3,
+            intent4: _intent4,
+            modified: true
+        });
+        _themes[_id] = theme;
+
+        // Emit event.
+        emit SetTokenTheme(_id, theme);
     }
 
     // -------------------------------------------------------------------------
@@ -199,8 +272,27 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
     /// @notice Returns the URI for a given token ID, as generated onchain.
     /// @param _id The token ID.
     /// @return The URI for the given token ID.
-    function _tokenURI(uint256 _id) internal pure returns (string memory) {
-        return FiveFiveFiveArt.render({_day: _id - 1});
+    function _tokenURI(uint256 _id) internal view returns (string memory) {
+        Theme memory theme = _themes[_id];
+
+        // Use the default theme if the theme was never set.
+        if (!theme.modified) {
+            theme = Theme({
+                background: 0x000000,
+                terminalBackground: 0x161616,
+                primary: 0x0090ff,
+                text: 0xededed,
+                subtext: 0xa0a0a0,
+                label: 0xff8b3e,
+                intent1: 0x4cc38a,
+                intent2: 0xf0c000,
+                intent3: 0xff8b3e,
+                intent4: 0xff6369,
+                modified: false
+            });
+        }
+
+        return FiveFiveFiveArt.render({_day: _id - 1, _theme: theme});
     }
 
     // -------------------------------------------------------------------------

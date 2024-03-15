@@ -6,6 +6,7 @@ import {DynamicBufferLib} from "solady/utils/DynamicBufferLib.sol";
 import {LibString} from "solady/utils/LibString.sol";
 
 import {FiveFiveFiveData} from "./FiveFiveFiveData.sol";
+import {IFiveFiveFive} from "src/interfaces/IFiveFiveFive.sol";
 
 /// @title 10000km ran in 555 (1000 × ⁵⁄₉) day-streak commemorative NFT visual
 /// art.
@@ -226,9 +227,7 @@ library FiveFiveFiveArt {
         "gSNYjHZFiouPhCtmUIjMammlaoplAbGyVo0rqRk7ZuIeankuHy9JjECBapQ5bxYixIBSin"
         "VQSKu04TRqshTvZMkh1IoU6XJOpkUKiSuVcw/b6gAQYJFi5Upy1BZYot19gdKJTp3FSWaW"
         "PV5fc/8BSkWLliQCApBSiJBTu4+DWadiww5zelw/f6GW6jt/Sz/J+7uzAQAAAA=)}pre{f"
-        "ont-family:A;background:#161616;width:280px;padding:0 8px;margin:0;hei"
-        "ght:188px;display:flex;}code{font-size:12px;margin:auto}span{font-vari"
-        "ant-ligatures:none}";
+        "ont-family:A;background:#";
 
     // -------------------------------------------------------------------------
     // `render` function
@@ -238,20 +237,13 @@ library FiveFiveFiveArt {
     /// token's corresponding image (SVG) data, animation (HTML) data, and
     /// metadata.
     /// @param _day 0-indexed day.
+    /// @param _theme The theme to use for the token.
     /// @return JSON output representing the 555 token.
-    function render(uint256 _day) internal pure returns (string memory) {
+    function render(
+        uint256 _day,
+        IFiveFiveFive.Theme memory _theme
+    ) internal pure returns (string memory) {
         uint256 id = _day + 1;
-
-        // Colors.
-        uint24 BACKGROUND_COLOR = 0x000000;
-        uint24 TEXT_COLOR = 0xededed;
-        uint24 SUBTEXT_COLOR = 0xa0a0a0;
-        uint24 PRIMARY_COLOR = 0x0090ff;
-        uint24 INTENT_ONE_COLOR = 0x4cc38a;
-        uint24 INTENT_TWO_COLOR = 0xf0c000;
-        uint24 INTENT_THREE_COLOR = 0xff8b3e;
-        uint24 INTENT_FOUR_COLOR = 0xff6369;
-        uint24 LABEL_COLOR = 0xff8b3e;
 
         // Retrieve data for the day.
         uint256 distance = FiveFiveFiveData.getDayMileage(_day);
@@ -278,22 +270,25 @@ library FiveFiveFiveArt {
         stylesBuffer.p(
             abi.encodePacked(
                 STYLE_HEADER,
-                ".f{color:#",
-                uint256(TEXT_COLOR).toHexStringNoPrefix(3),
+                uint256(_theme.terminalBackground).toHexStringNoPrefix(3),
+                ";width:280px;padding:0 8px;margin:0;height:188px;display:flex;"
+                "}code{font-size:12px;margin:auto}span{font-variant-ligatures:n"
+                "one}.f{color:#",
+                uint256(_theme.text).toHexStringNoPrefix(3),
                 "}.i{color:#",
-                uint256(SUBTEXT_COLOR).toHexStringNoPrefix(3),
+                uint256(_theme.subtext).toHexStringNoPrefix(3),
                 "}.v{color:#",
-                uint256(PRIMARY_COLOR).toHexStringNoPrefix(3),
+                uint256(_theme.primary).toHexStringNoPrefix(3),
                 "}.e{color:#",
-                uint256(LABEL_COLOR).toHexStringNoPrefix(3),
+                uint256(_theme.label).toHexStringNoPrefix(3),
                 "}.o{color:#",
-                uint256(INTENT_ONE_COLOR).toHexStringNoPrefix(3),
+                uint256(_theme.intent1).toHexStringNoPrefix(3),
                 "}.u{color:#",
-                uint256(INTENT_TWO_COLOR).toHexStringNoPrefix(3),
+                uint256(_theme.intent2).toHexStringNoPrefix(3),
                 "}.t{color:#",
-                uint256(INTENT_THREE_COLOR).toHexStringNoPrefix(3),
+                uint256(_theme.intent3).toHexStringNoPrefix(3),
                 "}.x{color:#",
-                uint256(INTENT_FOUR_COLOR).toHexStringNoPrefix(3),
+                uint256(_theme.intent4).toHexStringNoPrefix(3),
                 "}.y{font-family:A}.n{font-family:B}.z{position:absolute;margin"
                 ":auto 0;border-radius:100%;top:6px;width:12px;height:12px}</st"
                 "yle>"
@@ -305,7 +300,7 @@ library FiveFiveFiveArt {
         innerHTMLBuffer.p(
             abi.encodePacked(
                 '<div style="background:#',
-                uint256(BACKGROUND_COLOR).toHexStringNoPrefix(3),
+                uint256(_theme.background).toHexStringNoPrefix(3),
                 unicode";border-radius:8px;width:fit-content;height:fit-content"
                 unicode';overflow:hidden;border:1px solid #343434"><div style="'
                 unicode"position:relative;display:flex;height:24px;background:#"
@@ -390,7 +385,7 @@ library FiveFiveFiveArt {
                 unicode'\n│ <span class="y i"><span class="f">━</span>─────────'
                 unicode'───────────────</span> <span id="E" class="y f" style="'
                 unicode"cursor:pointer;background:#",
-                uint256(PRIMARY_COLOR).toHexStringNoPrefix(3),
+                uint256(_theme.primary).toHexStringNoPrefix(3),
                 unicode'">[PLAY]</span> │\n└──────────────────────────────────┘'
                 unicode"</code></pre></div>"
             )
@@ -405,7 +400,7 @@ library FiveFiveFiveArt {
                 '" height="512">',
                 stylesBuffer.data,
                 '<div style="background:#',
-                uint256(BACKGROUND_COLOR).toHexStringNoPrefix(3),
+                uint256(_theme.background).toHexStringNoPrefix(3),
                 ";display:flex;width:512px;height:512px;align-items:center;just"
                 'ify-content:center;" xmlns="http://www.w3.org/1999/xhtml">',
                 innerHTMLBuffer.data,
@@ -423,7 +418,7 @@ library FiveFiveFiveArt {
                 stylesBuffer.data,
                 '</head><body style="width:100%;height:100%;display:flex;justif'
                 "y-content:center;align-items:center;margin:0;background:#",
-                uint256(BACKGROUND_COLOR).toHexStringNoPrefix(3),
+                uint256(_theme.background).toHexStringNoPrefix(3),
                 '">',
                 innerHTMLBuffer.data,
                 unicode'<audio id="N">Your browser does not support the audio e'

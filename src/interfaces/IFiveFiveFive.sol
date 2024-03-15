@@ -10,11 +10,45 @@ interface IFiveFiveFive {
     /// @notice Emitted when the sender didn't supply enough funds.
     error InsufficientFunds();
 
-    /// @notice Emitted when the token ID is invalid (i.e. not in `[1, 555]`).
-    error InvalidTokenId();
+    /// @notice Emitted when the minting period has ended.
+    error MintingEnded();
 
     /// @notice Emitted when a token hasn't been minted.
     error TokenUnminted();
+
+    /// @notice Reverts if the sender isn't the owner of the token.
+    error Unauthorized();
+
+    // -------------------------------------------------------------------------
+    // Structs
+    // -------------------------------------------------------------------------
+
+    /// @notice Struct containing 24-bit RGB color values for the theme to
+    /// render the token URI with.
+    /// @param background The background color behind the terminal window.
+    /// @param terminalBackground The background color of the terminal window.
+    /// @param primary The color inner frames' borders and highlights.
+    /// @param text The color of the primary text.
+    /// @param subtext The color of the secondary text.
+    /// @param label The color of the inner frames' labels.
+    /// @param intent1 The color of the most positive intent.
+    /// @param intent2 The color of the second most positive intent.
+    /// @param intent3 The color of the second most negative intent.
+    /// @param intent4 The color of the most negative intent.
+    /// @param modified Whether the theme has been modified by the owner.
+    struct Theme {
+        uint24 background;
+        uint24 terminalBackground;
+        uint24 primary;
+        uint24 text;
+        uint24 subtext;
+        uint24 label;
+        uint24 intent1;
+        uint24 intent2;
+        uint24 intent3;
+        uint24 intent4;
+        bool modified;
+    }
 
     // -------------------------------------------------------------------------
     // Events
@@ -23,6 +57,11 @@ interface IFiveFiveFive {
     /// @notice Emitted when the base URI is set.
     /// @param baseURI The new base URI.
     event SetBaseURI(string baseURI);
+
+    /// @notice Emitted when some token's theme is set.
+    /// @param id The ID of the token.
+    /// @param theme The theme of the token.
+    event SetTokenTheme(uint256 indexed id, Theme theme);
 
     // -------------------------------------------------------------------------
     // Storage
@@ -52,6 +91,43 @@ interface IFiveFiveFive {
     /// @notice Withdraws the contract's balance to some address.
     /// @param _to The address to withdraw the contract's balance to.
     function withdraw(address _to) external;
+
+    // -------------------------------------------------------------------------
+    // Color theming
+    // -------------------------------------------------------------------------
+
+    /// @notice Returns the token theme for a token.
+    /// @param _id The ID of the token to get the theme for.
+    /// @return The token theme for the token.
+    function getTokenTheme(uint256 _id) external view returns (Theme memory);
+
+    /// @notice Sets the token theme for a token given 24-bit RGB color values.
+    /// @dev This function can only be called by the token's owner. `modified`
+    /// MUST be set to `true` the first time this function is called for a
+    /// token.
+    /// @param _background The background color behind the terminal window.
+    /// @param _terminalBackground The background color of the terminal window.
+    /// @param _primary The color inner frames' borders and highlights.
+    /// @param _text The color of the primary text.
+    /// @param _subtext The color of the secondary text.
+    /// @param _label The color of the inner frames' labels.
+    /// @param _intent1 The color of the most positive intent.
+    /// @param _intent2 The color of the second most positive intent.
+    /// @param _intent3 The color of the second most negative intent.
+    /// @param _intent4 The color of the most negative intent.
+    function setTokenTheme(
+        uint256 _id,
+        uint24 _background,
+        uint24 _terminalBackground,
+        uint24 _primary,
+        uint24 _text,
+        uint24 _subtext,
+        uint24 _label,
+        uint24 _intent1,
+        uint24 _intent2,
+        uint24 _intent3,
+        uint24 _intent4
+    ) external;
 
     // -------------------------------------------------------------------------
     // Onchain audio generation
