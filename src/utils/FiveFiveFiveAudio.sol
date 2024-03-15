@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.21;
 
-import {FixedPointMathLib as Math} from "solady/utils/FixedPointMathLib.sol";
+import { FixedPointMathLib as Math } from "solady/utils/FixedPointMathLib.sol";
 
 /// @title 10000km ran in 555 (1000 × ⁵⁄₉) day-streak commemorative NFT auditory
 /// art.

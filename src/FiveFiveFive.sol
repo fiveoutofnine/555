@@ -36,7 +36,7 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
 
     /// @notice Price to mint a token.
     /// @dev Equivalent to (⁵⁄₉) / 10 ETH.
-    uint256 constant PRICE = 0.055_555_555_555_555_555 ether;
+    uint256 constant PRICE = 0.055555555555555555 ether;
 
     // -------------------------------------------------------------------------
     // Storage
