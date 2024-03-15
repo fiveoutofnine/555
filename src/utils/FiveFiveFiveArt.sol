@@ -371,8 +371,8 @@ library FiveFiveFiveArt {
                 unicode'───────────────</span> <span id="E" class="y f" style="'
                 unicode"cursor:pointer;background:#",
                 uint256(PRIMARY_COLOR).toHexStringNoPrefix(3),
-                unicode'">[PLAY]</span> │\n└─────────────────────────────────'
-                unicode"─┘</code></pre></div>"
+                unicode'">[PLAY]</span> │\n└──────────────────────────────────┘'
+                unicode"</code></pre></div>"
             )
         );
 
