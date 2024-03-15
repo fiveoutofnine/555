@@ -122,7 +122,7 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
     /// @param _id The token ID.
     /// @return The URI for the given token ID.
     function _tokenURI(uint256 _id) internal pure returns (string memory) {
-        return FiveFiveFiveArt.render(_id);
+        return FiveFiveFiveArt.render({_day: _id - 1});
     }
 
     // -------------------------------------------------------------------------
