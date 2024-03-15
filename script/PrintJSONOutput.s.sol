@@ -7,7 +7,7 @@ import {LibString} from "solady/utils/LibString.sol";
 
 import {FiveFiveFiveArt} from "src/utils/FiveFiveFiveArt.sol";
 
-contract PrintDataScript is Script {
+contract PrintJSONOutputScript is Script {
     using LibString for uint256;
 
     // -------------------------------------------------------------------------
@@ -17,7 +17,7 @@ contract PrintDataScript is Script {
     function run() public {
         for (uint256 i = 0; i < 555; ) {
             vm.writeFile(
-                string.concat("./output/svg/", (i + 1).toString(), ".svg"),
+                string.concat("./output/txt/", (i + 1).toString(), ".txt"),
                 FiveFiveFiveArt.render(i)
             );
 

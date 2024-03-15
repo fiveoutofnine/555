@@ -241,6 +241,19 @@ library FiveFiveFiveArt {
     /// @return JSON output representing the 555 token.
     function render(uint256 _day) internal pure returns (string memory) {
         uint256 id = _day + 1;
+
+        // Colors.
+        uint24 BACKGROUND_COLOR = 0x000000;
+        uint24 TEXT_COLOR = 0xededed;
+        uint24 SUBTEXT_COLOR = 0xa0a0a0;
+        uint24 PRIMARY_COLOR = 0x0090ff;
+        uint24 INTENT_ONE_COLOR = 0x4cc38a;
+        uint24 INTENT_TWO_COLOR = 0xf0c000;
+        uint24 INTENT_THREE_COLOR = 0xff8b3e;
+        uint24 INTENT_FOUR_COLOR = 0xff6369;
+        uint24 LABEL_COLOR = 0xff8b3e;
+
+        // Retrieve data for the day.
         uint256 distance = FiveFiveFiveData.getDayMileage(_day);
         (string memory locationName, uint256 locationLength) = FiveFiveFiveData
             .getDayLocation(_day);
@@ -252,16 +265,7 @@ library FiveFiveFiveArt {
             (_day > 4 ? FiveFiveFiveData.getDayMileage(_day - 5) : 0) +
             (_day > 5 ? FiveFiveFiveData.getDayMileage(_day - 6) : 0);
 
-        uint24 BACKGROUND_COLOR = 0x000000;
-        uint24 TEXT_COLOR = 0xededed;
-        uint24 SUBTEXT_COLOR = 0xa0a0a0;
-        uint24 PRIMARY_COLOR = 0x0090ff;
-        uint24 INTENT_ONE_COLOR = 0x4cc38a;
-        uint24 INTENT_TWO_COLOR = 0xf0c000;
-        uint24 INTENT_THREE_COLOR = 0xff8b3e;
-        uint24 INTENT_FOUR_COLOR = 0xff6369;
-        uint24 LABEL_COLOR = 0xff8b3e;
-
+        // Split distance and workload into km and m.
         (uint256 km, uint256 m) = (distance / 100, distance % 100);
         (uint256 workloadKm, uint256 workloadM) = (
             workload / 100,
@@ -314,6 +318,7 @@ library FiveFiveFiveArt {
                 unicode'┌─<span class="n e">day</span>─╥─<span class="n e">mile'
                 unicode'age</span>─╥─<span class="n e">location</span>─────────'
                 unicode"┐\n│ ",
+                // 0-pad day number to 3 digits.
                 id < 10
                     ? '<span class="y i">00</span>'
                     : id < 100
@@ -322,26 +327,39 @@ library FiveFiveFiveArt {
                 '<span class="n f">',
                 id.toString(),
                 unicode'</span> ║ <span class="n f">',
+                // 0-pad km portion of distance to 2 digits. Since the largest
+                // mileage day is 50.02, we never need to pad to more.
                 km < 10 ? " " : "",
                 km.toString(),
                 '<span class="y i">.</span>',
+                // 0-pad m portion of distance to 2 digits. Since the data only
+                // has granularity to the 0.01th of a kilometer, we never need
+                // to pad to more.
                 m < 10 ? "0" : "",
                 m.toString(),
                 unicode'<span class="y i">km</span></span> ║ <span class="n f">',
                 locationName,
                 "</span>",
+                // Add spaces to align the remaining part of the frame.
                 LibString.repeat(" ", 17 - locationLength),
                 unicode"│\n└─────╨─────────╨──────────────────┘\n┌─<span class="
                 unicode'"n e">7d<span class="y v">─</span>workload</span>──────'
                 unicode"───────",
+                // Pad km portion of workload to 3 digits. Since no sliding
+                // window of 7 day mileage exceeds 1000 km, we never need to pad
+                // to more.
                 workloadKm < 100 ? unicode"─" : "",
                 '<span class="n f">',
                 workloadKm.toString(),
                 '<span class="y i">.</span>',
+                // 0-pad m portion of distance to 2 digits. Since the data only
+                // has granularity to the 0.01th of a kilometer, we never need
+                // to pad to more.
                 workloadM < 10 ? "0" : "",
                 workloadM.toString(),
                 unicode'<span class="y i">km</span></span>─┐\n│ <span class="y '
                 unicode'f">080 <span class="o">',
+                // Construct workload gradient bars.
                 getWorkloadSegment(workloadBars < 6 ? workloadBars : 6),
                 '</span><span class="u">',
                 workloadBars > 11 ? unicode"▮▮▮▮▮▮" : "",
@@ -444,6 +462,9 @@ library FiveFiveFiveArt {
                 unicode'","description":"⁵⁄₉ ran ',
                 km.toString(),
                 ".",
+                // 0-pad m portion of distance to 2 digits. Since the data only
+                // has granularity to the 0.01th of a kilometer, we never need
+                // to pad to more.
                 m < 10 ? "0" : "",
                 m.toString(),
                 "km on day ",
@@ -463,7 +484,8 @@ library FiveFiveFiveArt {
                 '"}]}'
             );
         }
-        return string(svgData);
+
+        // Return token URI.
         return
             string.concat(
                 "data:json/application;base64,",
@@ -471,6 +493,11 @@ library FiveFiveFiveArt {
             );
     }
 
+    /// @notice Helper function to render each segment of the workload gradient
+    /// bars.
+    /// @dev Assumes `_count` is in `[0, 6]`.
+    /// @param _count Number of workload gradient bars to render.
+    /// @return String representing the workload gradient bars.
     function getWorkloadSegment(
         uint256 _count
     ) internal pure returns (string memory) {
