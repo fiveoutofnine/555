@@ -38,10 +38,11 @@ interface IFiveFiveFive {
     // Functions
     // -------------------------------------------------------------------------
 
-    /// @notice Mints the token of ID `_id` to the sender.
-    /// @dev The ID of the token to mint must be in the range `[1, 555]`.
-    /// @param _id The ID of the token to mint.
-    function mint(uint256 _id) external payable;
+    /// @notice Mints the next mintable token to the sender.
+    /// @dev The ID of the token MUST automatically increment by 1 every time,
+    /// unless the token ID is 374, 458, or 554, in which case it MUST increment
+    /// by 2. This is because they are special days minted in the constructor.
+    function mint() external payable;
 
     /// @notice Sets the base URI for the token collection.
     /// @dev This function can only be called by the contract owner.
