@@ -271,24 +271,23 @@ library FiveFiveFiveArt {
         stylesBuffer.p(
             abi.encodePacked(
                 STYLE_HEADER,
-                ".a{color:#", // f
+                ".f{color:#",
                 uint256(TEXT_COLOR).toHexStringNoPrefix(3),
-                "}.b{color:#", // i
+                "}.i{color:#",
                 uint256(SUBTEXT_COLOR).toHexStringNoPrefix(3),
-                "}.c{color:#", // v
+                "}.v{color:#",
                 uint256(PRIMARY_COLOR).toHexStringNoPrefix(3),
-                "}.z{color:#", // e
+                "}.e{color:#", // e
                 uint256(LABEL_COLOR).toHexStringNoPrefix(3),
-                "}.d{color:#", // e
+                "}.o{color:#",
                 uint256(INTENT_ONE_COLOR).toHexStringNoPrefix(3),
-                "}.e{color:#", // o
+                "}.u{color:#",
                 uint256(INTENT_TWO_COLOR).toHexStringNoPrefix(3),
-                "}.f{color:#", // u
+                "}.t{color:#",
                 uint256(INTENT_THREE_COLOR).toHexStringNoPrefix(3),
-                "}.g{color:#", // t
+                "}.O{color:#",
                 uint256(INTENT_FOUR_COLOR).toHexStringNoPrefix(3),
-                // O, F, n, I
-                "}.h{font-family:A}.i{font-family:B}.j{position:absolute;margin"
+                "}.F{font-family:A}.n{font-family:B}.I{position:absolute;margin"
                 ":auto 0;border-radius:100%;top:6px;width:12px;height:12px}</st"
                 "yle>"
             )
@@ -306,69 +305,69 @@ library FiveFiveFiveArt {
                 unicode'dadada;padding-left:6px;padding-right:6px"><code style='
                 unicode'"font-family:C;margin:auto;color:#484848">1000 × ⁵⁄₉ = '
                 unicode'555 — 36×11</code><div style="background:#ed6a5e;left:6'
-                unicode'px" class="j"></div><div style="background:#f5bf4f;left'
-                unicode':22px" class="j"></div><div style="background:#62c555;l'
-                unicode'eft:38px" class="j"></div></div><pre><code class="h c">'
-                unicode'┌─<span class="i e">day</span>─╥─<span class="i e">mile'
-                unicode'age</span>─╥─<span class="i e">location</span>─────────'
+                unicode'px" class="I"></div><div style="background:#f5bf4f;left'
+                unicode':22px" class="I"></div><div style="background:#62c555;l'
+                unicode'eft:38px" class="I"></div></div><pre><code class="F v">'
+                unicode'┌─<span class="n e">day</span>─╥─<span class="n e">mile'
+                unicode'age</span>─╥─<span class="n e">location</span>─────────'
                 unicode"┐\n│ ",
                 id < 10
-                    ? '<span class="h b">00</span>'
+                    ? '<span class="F i">00</span>'
                     : id < 100
-                        ? '<span class="h b">0</span>'
+                        ? '<span class="F i">0</span>'
                         : "",
-                '<span class="i a">',
+                '<span class="n f">',
                 id.toString(),
-                unicode'</span> ║ <span class="i a">',
+                unicode'</span> ║ <span class="n f">',
                 km < 10 ? " " : "",
                 km.toString(),
-                '<span class="h b">.</span>',
+                '<span class="F i">.</span>',
                 m < 10 ? "0" : "",
                 m.toString(),
-                unicode'<span class="h b">km</span></span> ║ <span class="i a">',
+                unicode'<span class="F i">km</span></span> ║ <span class="n f">',
                 locationName,
                 "</span>",
                 LibString.repeat(" ", 17 - locationLength),
                 unicode"│\n└─────╨─────────╨──────────────────┘\n┌─<span class="
-                unicode'"i e">7d<span class="h c">─</span>workload</span>──────'
+                unicode'"n e">7d<span class="F v">─</span>workload</span>──────'
                 unicode"───────",
                 workloadKm < 100 ? unicode"─" : "",
-                '<span class="i a">',
+                '<span class="n f">',
                 workloadKm.toString(),
-                '<span class="h b">.</span>',
+                '<span class="F i">.</span>',
                 workloadM < 10 ? "0" : "",
                 workloadM.toString(),
-                unicode'<span class="h b">km</span></span>─┐\n│ <span class="h '
-                unicode'a">080 <span class="d">',
+                unicode'<span class="F i">km</span></span>─┐\n│ <span class="F '
+                unicode'f">080 <span class="o">',
                 getWorkloadSegment(workloadBars < 6 ? workloadBars : 6),
-                '</span><span class="e">',
+                '</span><span class="u">',
                 workloadBars > 11 ? unicode"▮▮▮▮▮▮" : "",
                 workloadBars < 7 ? unicode"______" : "",
                 workloadBars > 6 && workloadBars < 12
                     ? getWorkloadSegment(workloadBars - 6)
                     : "",
-                '</span><span class="f">',
+                '</span><span class="t">',
                 workloadBars > 17 ? unicode"▮▮▮▮▮▮" : "",
                 workloadBars < 13 ? unicode"______" : "",
                 workloadBars > 12 && workloadBars < 18
                     ? getWorkloadSegment(workloadBars - 12)
                     : "",
-                '</span><span class="g">',
+                '</span><span class="O">',
                 workloadBars > 23 ? unicode"▮▮▮▮▮▮" : "",
                 workloadBars < 19 ? unicode"______" : "",
                 workloadBars > 18 && workloadBars < 24
                     ? getWorkloadSegment(workloadBars - 18)
                     : "",
                 unicode"</span> 192</span> │\n└────────────────────────────────"
-                unicode'──┘\n┌─<span class="i e">bytebeat</span>───────────────'
-                unicode'──────────┐\n│ ► <span class="i a">gonna fly now <span '
-                unicode'class="h b">from</span> rocky</span>       │\n│ <span c'
-                unicode'lass="h b"><span class="i a">32</span>kHz <span class="'
-                unicode'i a">31</span>.<span class="i a">25</span>kbps    [<spa'
-                unicode'n class="a">0</span>:<span class="a">00</span> / <span '
-                unicode'class="a">0</span>:<span class="a">25</span>]</span> │',
-                unicode'\n│ <span class="h b"><span class="a">━</span>─────────'
-                unicode'───────────────</span> <span class="h a" id="b" style="'
+                unicode'──┘\n┌─<span class="n e">bytebeat</span>───────────────'
+                unicode'──────────┐\n│ ► <span class="n f">gonna fly now <span '
+                unicode'class="F i">from</span> rocky</span>       │\n│ <span c'
+                unicode'lass="F i"><span class="n f">32</span>kHz <span class="'
+                unicode'i f">31</span>.<span class="n f">25</span>kbps    [<spa'
+                unicode'n class="f">0</span>:<span class="f">00</span> / <span '
+                unicode'class="f">0</span>:<span class="f">25</span>]</span> │',
+                unicode'\n│ <span class="F i"><span class="f">━</span>─────────'
+                unicode'───────────────</span> <span class="F f" id="i" style="'
                 unicode"background:#",
                 uint256(PRIMARY_COLOR).toHexStringNoPrefix(3),
                 unicode'">[PLAY]</span> │\n└──────────────────────────────────┘'
@@ -406,7 +405,7 @@ library FiveFiveFiveArt {
                 uint256(BACKGROUND_COLOR).toHexStringNoPrefix(3),
                 '">',
                 innerHTMLBuffer.data,
-                unicode'<audio id="a">Your browser does not support the audio e'
+                unicode'<audio id="f">Your browser does not support the audio e'
                 unicode"lement.</audio><script>g=0;v='repeat';e='charCodeAt';o="
                 unicode"u=>1-u**2/2+u**4/24-u**6/720;T=O=>o((O%4)-2)*(((O&3)>>2"
                 unicode')-1);F=n=>n.split``.map(x=>"1"[v]((y=x[e](0))&63)+"0"[v'
@@ -419,14 +418,14 @@ library FiveFiveFiveArt {
                 unicode'耹耹‷‵䀷⁁⁂⁃‷‹‷䀹⁃⁄⁅‹‷‵〷ှ၁ှ⁂⁃‷‹‷〹၀၃၀⁄၅၀္ဵ耷耹逺䁆〺‹恅쀹쀹");'
                 unicode'M=F(I("ᾀ⽀၏ဠၟ큏恏቏⁃၇၃၇၃၏ぇ၃။၇၃ဠဴ"));N=I("퀠퀠퀠瀠䁆쁅䁅쁆䁆쁈'
                 unicode'䁈쁆䁆쁈䁈聊聈ꁊ큈큈쁈");O=F(`CŃŃŃ${"ʃÀʃӀʃÀ"[v](6)}ŃŃŃŃŃŃʃÀ`)'
-                unicode';document.getElementById("b").addEventListener("click",'
+                unicode';document.getElementById("i").addEventListener("click",'
                 unicode'()=>{for(s="",t=0;t<776*2**10;t++){f=(t>>10)%776;i=f>>2'
                 unicode";E=(x,y=0)=>.392*(t+12*T(t/1600))*2**(x/12-y)&32;V=(G[f"
                 unicode']*E(J[e](i)-48)+(i>15&&G[f])*E(H[e](i)-48)+(i>165)*E("5'
                 unicode'79:<>@ACEFGIKLN"[e]((f>>1)-332)-48)+(i>173)*E(21)+(K[f]'
                 unicode")*E(L[e](i)-48,2)+M[f]*E(N[e](i)-48,2)+(i>58&&i<178&&O["
                 unicode"f-236])*((2e11*(t/(1<<14))**2)&255)/5)%256|0;s+=String."
-                unicode'fromCharCode(V)}a=document.getElementById("a");a.src="d'
+                unicode'fromCharCode(V)}a=document.getElementById("f");a.src="d'
                 unicode"ata:audio/wav;base64,UklGRi4gDABXQVZFZm10IBAAAAABAAEAAH"
                 unicode'0AAAB9AAABAAgAZGF0YQAgDACA"+btoa(s);a.play()})</script>'
                 unicode"</body></html>"
