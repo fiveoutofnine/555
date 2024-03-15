@@ -61,7 +61,7 @@ interface IFiveFiveFive {
     /// @notice Emitted when some token's theme is set.
     /// @param id The ID of the token.
     /// @param theme The theme of the token.
-    event SetTokenTheme(uint256 indexed id, Theme theme);
+    event SetTokenTheme(uint256 indexed id, Theme indexed theme);
 
     // -------------------------------------------------------------------------
     // Storage
