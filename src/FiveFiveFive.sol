@@ -56,6 +56,9 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
 
     /// @inheritdoc IFiveFiveFive
     function mint(uint256 _id) external payable override {
+        // Revert if the token ID is invalid.
+        if (_id < 1 || _id > 555) revert InvalidTokenId();
+        // Revert if the sender didn't supply enough funds.
         if (msg.value < PRICE) revert InsufficientFunds();
 
         // Mint token.

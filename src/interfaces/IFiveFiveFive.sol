@@ -10,6 +10,9 @@ interface IFiveFiveFive {
     /// @notice Emitted when the sender didn't supply enough funds.
     error InsufficientFunds();
 
+    /// @notice Emitted when the token ID is invalid (i.e. not in `[1, 555]`).
+    error InvalidTokenId();
+
     /// @notice Emitted when a token hasn't been minted.
     error TokenUnminted();
 
@@ -36,6 +39,7 @@ interface IFiveFiveFive {
     // -------------------------------------------------------------------------
 
     /// @notice Mints the token of ID `_id` to the sender.
+    /// @dev The ID of the token to mint must be in the range `[1, 555]`.
     /// @param _id The ID of the token to mint.
     function mint(uint256 _id) external payable;
 
