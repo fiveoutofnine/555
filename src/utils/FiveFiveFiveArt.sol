@@ -9,7 +9,9 @@ import {FiveFiveFiveData} from "./FiveFiveFiveData.sol";
 
 /// @title 10000km ran in 555 (1000 × ⁵⁄₉) day-streak commemorative NFT visual
 /// art.
-/// @notice A library for generating SVG and HTML output for {FiveFiveFive}.
+/// @notice A library for generating art (SVG and HTML) and metadata for
+/// {FiveFiveFive}.
+/// @author fiveoutofnine
 library FiveFiveFiveArt {
     using DynamicBufferLib for DynamicBufferLib.DynamicBuffer;
     using LibString for uint256;
