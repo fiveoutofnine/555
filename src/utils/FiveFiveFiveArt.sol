@@ -367,7 +367,7 @@ library FiveFiveFiveArt {
                 unicode'n class="f">0</span>:<span class="f">00</span> / <span '
                 unicode'class="f">0</span>:<span class="f">25</span>]</span> │',
                 unicode'\n│ <span class="F i"><span class="f">━</span>─────────'
-                unicode'───────────────</span> <span class="F f" id="i" style="'
+                unicode'───────────────</span> <span class="F f" id="E" style="'
                 unicode"background:#",
                 uint256(PRIMARY_COLOR).toHexStringNoPrefix(3),
                 unicode'">[PLAY]</span> │\n└──────────────────────────────────┘'
@@ -405,7 +405,7 @@ library FiveFiveFiveArt {
                 uint256(BACKGROUND_COLOR).toHexStringNoPrefix(3),
                 '">',
                 innerHTMLBuffer.data,
-                unicode'<audio id="f">Your browser does not support the audio e'
+                unicode'<audio id="N">Your browser does not support the audio e'
                 unicode"lement.</audio><script>g=0;v='repeat';e='charCodeAt';o="
                 unicode"u=>1-u**2/2+u**4/24-u**6/720;T=O=>o((O%4)-2)*(((O&3)>>2"
                 unicode')-1);F=n=>n.split``.map(x=>"1"[v]((y=x[e](0))&63)+"0"[v'
@@ -418,14 +418,14 @@ library FiveFiveFiveArt {
                 unicode'耹耹‷‵䀷⁁⁂⁃‷‹‷䀹⁃⁄⁅‹‷‵〷ှ၁ှ⁂⁃‷‹‷〹၀၃၀⁄၅၀္ဵ耷耹逺䁆〺‹恅쀹쀹");'
                 unicode'M=F(I("ᾀ⽀၏ဠၟ큏恏቏⁃၇၃၇၃၏ぇ၃။၇၃ဠဴ"));N=I("퀠퀠퀠瀠䁆쁅䁅쁆䁆쁈'
                 unicode'䁈쁆䁆쁈䁈聊聈ꁊ큈큈쁈");O=F(`CŃŃŃ${"ʃÀʃӀʃÀ"[v](6)}ŃŃŃŃŃŃʃÀ`)'
-                unicode';document.getElementById("i").addEventListener("click",'
+                unicode';document.getElementById("E").addEventListener("click",'
                 unicode'()=>{for(s="",t=0;t<776*2**10;t++){f=(t>>10)%776;i=f>>2'
                 unicode";E=(x,y=0)=>.392*(t+12*T(t/1600))*2**(x/12-y)&32;V=(G[f"
                 unicode']*E(J[e](i)-48)+(i>15&&G[f])*E(H[e](i)-48)+(i>165)*E("5'
                 unicode'79:<>@ACEFGIKLN"[e]((f>>1)-332)-48)+(i>173)*E(21)+(K[f]'
                 unicode")*E(L[e](i)-48,2)+M[f]*E(N[e](i)-48,2)+(i>58&&i<178&&O["
                 unicode"f-236])*((2e11*(t/(1<<14))**2)&255)/5)%256|0;s+=String."
-                unicode'fromCharCode(V)}a=document.getElementById("f");a.src="d'
+                unicode'fromCharCode(V)}a=document.getElementById("N");a.src="d'
                 unicode"ata:audio/wav;base64,UklGRi4gDABXQVZFZm10IBAAAAABAAEAAH"
                 unicode'0AAAB9AAABAAgAZGF0YQAgDACA"+btoa(s);a.play()})</script>'
                 unicode"</body></html>"
