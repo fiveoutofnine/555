@@ -169,11 +169,12 @@ library FiveFiveFiveArt {
                 unicode'class="y i">from</span> rocky</span>       │\n│ <span c'
                 unicode'lass="y i"><span class="n f">32</span>kHz <span class="'
                 unicode'n f">31</span>.<span class="n f">25</span>kbps    [<spa'
-                unicode'n class="f">0</span>:<span class="f">00</span> / <span '
-                unicode'class="f">0</span>:<span class="f">25</span>]</span> │',
-                unicode'\n│ <span class="y i"><span class="f">━</span>─────────'
-                unicode'───────────────</span> <span id="E" class="y f" style="'
-                unicode"cursor:pointer;background:#",
+                unicode'n class="f">0</span>:<span id="z" class="f">00</span> /'
+                unicode' <span class="f">0</span>:<span class="f">25</span>]</s'
+                unicode'pan> │\n│ <span class="y i"><span id="x"></span><span c'
+                unicode'lass="f">━</span><span id="y">────────────────────────<'
+                unicode'/span></span> <span id="E" class="y f" style="cursor:po'
+                unicode"inter;background:#",
                 uint256(_theme.primary).toHexStringNoPrefix(3),
                 unicode'">[PLAY]</span> │\n└──────────────────────────────────┘'
                 unicode"</code></pre></div>"
@@ -211,29 +212,33 @@ library FiveFiveFiveArt {
                 '">',
                 innerHTMLBuffer.data,
                 unicode'<audio id="N">Your browser does not support the audio e'
-                unicode"lement.</audio><script>g=0;v='repeat';e='charCodeAt';o="
-                unicode"u=>1-u**2/2+u**4/24-u**6/720;T=O=>o((O%4)-2)*(((O&3)>>2"
-                unicode')-1);F=n=>n.split``.map(x=>"1"[v]((y=x[e](0))&63)+"0"[v'
-                unicode"](y>>6)).join``;I=n=>n.split``.map(x=>String.fromCharCo"
-                unicode'de((y=x[e](0))&4095)[v](y>>12)).join``;G=F(I("⁇⁃၇⁃၇⁃ぇ⁃'
-                unicode'၇⁃၇⁃ቇ၇⁃၇၃၇၃၏⁇ぃ၇ၓ၃။ၯ၃။ၯ၃။ၯ၃။ቿ⁃။⁃ቛ⁃၇၃၇၃၏灇ဠူ"));H=I('
-                unicode'"쀠䀠ꀵ‹䀵쀴쀴怴္〼쀹ှ぀쀵္〼쀹ှ぀쀹怹့ဵ〷ဵ့瀹䀵〴〲䀰怵");J=I("ꀵ‹䀵'
-                unicode'ꀹ‼쀹쀹ꀹ၅え큊が큅え큊が쁅恅့ဵ〷ဵ့瀹쁁⁁⁆쁅쁅聅");K=F(I("ኀ⿀ၯ၏ဿ'
-                unicode'၀⁇၏⁃假၏⁃假။ぃ假။ぃ၇䁃ၛ၃၇။၇၃၇ၛ၃၇䁃၇⁃䁇ဠူ"));L=I("퀠퀠耠쁀䀺'
-                unicode'耹耹‷‵䀷⁁⁂⁃‷‹‷䀹⁃⁄⁅‹‷‵〷ှ၁ှ⁂⁃‷‹‷〹၀၃၀⁄၅၀္ဵ耷耹逺䁆〺‹恅쀹쀹");'
-                unicode'M=F(I("ᾀ⽀၏ဠၟ큏恏቏⁃၇၃၇၃၏ぇ၃။၇၃ဠဴ"));N=I("퀠퀠퀠瀠䁆쁅䁅쁆䁆쁈'
-                unicode'䁈쁆䁆쁈䁈聊聈ꁊ큈큈쁈");O=F(`CŃŃŃ${"ʃÀʃӀʃÀ"[v](6)}ŃŃŃŃŃŃʃÀ`)'
-                unicode';document.getElementById("E").addEventListener("click",'
-                unicode'()=>{for(s="",t=0;t<776*2**10;t++){f=(t>>10)%776;i=f>>2'
-                unicode";E=(x,y=0)=>.392*(t+12*T(t/1600))*2**(x/12-y)&32;V=(G[f"
-                unicode']*E(J[e](i)-48)+(i>15&&G[f])*E(H[e](i)-48)+(i>165)*E("5'
-                unicode'79:<>@ACEFGIKLN"[e]((f>>1)-332)-48)+(i>173)*E(21)+(K[f]'
-                unicode")*E(L[e](i)-48,2)+M[f]*E(N[e](i)-48,2)+(i>58&&i<178&&O["
-                unicode"f-236])*((2e11*(t/(1<<14))**2)&255)/5)%256|0;s+=String."
-                unicode'fromCharCode(V)}a=document.getElementById("N");a.src="d'
-                unicode"ata:audio/wav;base64,UklGRi4gDABXQVZFZm10IBAAAAABAAEAAH"
-                unicode'0AAAB9AAABAAgAZGF0YQAgDACA"+btoa(s);a.play()})</script>'
-                unicode"</body></html>"
+                unicode'lement.</audio><script>h="";D="getElementById";v="repea'
+                unicode't";e="charCodeAt";o=u=>1-u**2/2+u**4/24-u**6/720;T=O=>o'
+                unicode'((O%4)-2)*(((O&3)>>2)-1);F=n=>n.split``.map(x=>"1"[v](('
+                unicode'y=x[e](0))&63)+"0"[v](y>>6)).join``;I=n=>n.split``.map('
+                unicode"x=>String.fromCharCode((y=x[e](0))&4095)[v](y>>12)).joi"
+                unicode'n``;G=F(I("⁇⁃၇⁃၇⁃ぇ⁃၇⁃၇⁃ቇ၇⁃၇၃၇၃၏⁇ぃ၇ၓ၃။ၯ၃။ၯ၃။ၯ၃။ቿ⁃။⁃'
+                unicode'ቛ⁃၇၃၇၃၏灇ဠူ"));H=I("쀠䀠ꀵ‹䀵쀴쀴怴္〼쀹ှ぀쀵္〼쀹ှ぀쀹怹့ဵ〷ဵ့瀹'
+                unicode'䀵〴〲䀰怵");J=I("ꀵ‹䀵ꀹ‼쀹쀹ꀹ၅え큊が큅え큊が쁅恅့ဵ〷ဵ့瀹쁁⁁⁆쁅쁅聅'
+                unicode'");K=F(I("ኀ⿀ၯ၏ဿ၀⁇၏⁃假၏⁃假။ぃ假။ぃ၇䁃ၛ၃၇။၇၃၇ၛ၃၇䁃၇⁃'
+                unicode'䁇ဠူ"));L=I("퀠퀠耠쁀䀺耹耹‷‵䀷⁁⁂⁃‷‹‷䀹⁃⁄⁅‹‷‵〷ှ၁ှ⁂⁃‷‹‷〹၀၃၀⁄'
+                unicode'၅၀္ဵ耷耹逺䁆〺‹恅쀹쀹");M=F(I("ᾀ⽀၏ဠၟ큏恏቏⁃၇၃၇၃၏ぇ၃။၇၃ဠဴ"));N'
+                unicode'=I("퀠퀠퀠瀠䁆쁅䁅쁆䁆쁈䁈쁆䁆쁈䁈聊聈ꁊ큈큈쁈");O=F(`CŃŃŃ${"ʃÀʃӀ'
+                unicode'ʃÀ"[v](6)}ŃŃŃŃŃŃʃÀ`);document[D]("E").addEventListener('
+                unicode'"click",()=>{g=0;clearInterval(h);R=()=>{z=String(Math.'
+                unicode'min(g,25));document[D]("x").innerHTML="─"[v](Math.min(g'
+                unicode',24));document[D]("y").innerHTML="─"[v](Math.max(24-g,0'
+                unicode'));document[D]("z").innerHTML=z.padStart(2,"0")};R();fo'
+                unicode'r(s="",t=0;t<776*2**10;t++){f=(t>>10)%776;i=f>>2;E=(x,y'
+                unicode"=0)=>.392*(t+12*T(t/1600))*2**(x/12-y)&32;V=(G[f]*E(J[e"
+                unicode'](i)-48)+(i>15&&G[f])*E(H[e](i)-48)+(i>165)*E("579:<>@A'
+                unicode'CEFGIKLN"[e]((f>>1)-332)-48)+(i>173)*E(21)+(K[f])*E(L[e'
+                unicode"](i)-48,2)+M[f]*E(N[e](i)-48,2)+(i>58&&i<178&&O[f-236])"
+                unicode"*((2e11*(t/(1<<14))**2)&255)/5)%256|0;s+=String.fromCha"
+                unicode'rCode(V)}a=document[D]("N");a.src="data:audio/wav;base6'
+                unicode"4,UklGRi4gDABXQVZFZm10IBAAAAABAAEAAH0AAAB9AAABAAgAZGF0Y"
+                unicode'QAgDACA"+btoa(s);a.play();h=setInterval(()=>{g++;R()},1'
+                unicode"000);})</script></body></html>"
             );
         }
 
