@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.21;
 
-/// @title Mileage and location data for each of the 555 days of running.
+/// @title Mileage and location data for each of the 555 days of running
 /// @notice A library for generating art and metadata for {FiveFiveFiveArt}.
 /// @author fiveoutofnine
 library FiveFiveFiveData {
