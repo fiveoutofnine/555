@@ -147,19 +147,19 @@ library FiveFiveFiveArt {
                 getWorkloadSegment(workloadBars < 6 ? workloadBars : 6),
                 '</span><span class="u">',
                 workloadBars > 11 ? unicode"▮▮▮▮▮▮" : "",
-                workloadBars < 7 ? unicode"......" : "",
+                workloadBars < 7 ? '<span class="i">......</span>' : "",
                 workloadBars > 6 && workloadBars < 12
                     ? getWorkloadSegment(workloadBars - 6)
                     : "",
                 '</span><span class="t">',
                 workloadBars > 17 ? unicode"▮▮▮▮▮▮" : "",
-                workloadBars < 13 ? unicode"......" : "",
+                workloadBars < 13 ? '<span class="i">......</span>' : "",
                 workloadBars > 12 && workloadBars < 18
                     ? getWorkloadSegment(workloadBars - 12)
                     : "",
                 '</span><span class="x">',
                 workloadBars > 23 ? unicode"▮▮▮▮▮▮" : "",
-                workloadBars < 19 ? unicode"......" : "",
+                workloadBars < 19 ? '<span class="i">......</span>' : "",
                 workloadBars > 18 && workloadBars < 24
                     ? getWorkloadSegment(workloadBars - 18)
                     : "",
@@ -293,7 +293,9 @@ library FiveFiveFiveArt {
         return
             string.concat(
                 LibString.repeat(unicode"▮", _count),
-                LibString.repeat(unicode".", 6 - _count)
+                '<span class="i">',
+                LibString.repeat(".", 6 - _count),
+                "</span>"
             );
     }
 }
