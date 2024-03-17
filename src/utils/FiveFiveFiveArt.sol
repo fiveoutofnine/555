@@ -13,6 +13,8 @@ import {IFiveFiveFive} from "src/interfaces/IFiveFiveFive.sol";
 /// art
 /// @notice A library for generating art (SVG and HTML) and metadata for
 /// {FiveFiveFive}.
+/// @dev The source code for this library is intended to be viewed with
+/// `Menlo, Monaco, 'Courier New', monospace`.
 /// @author fiveoutofnine
 library FiveFiveFiveArt {
     using DynamicBufferLib for DynamicBufferLib.DynamicBuffer;
