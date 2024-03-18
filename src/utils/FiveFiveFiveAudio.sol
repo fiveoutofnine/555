@@ -3,8 +3,8 @@ pragma solidity ^0.8.21;
 
 import { FixedPointMathLib as Math } from "solady/utils/FixedPointMathLib.sol";
 
-/// @title 10000km ran in 555 (1000 × ⁵⁄₉) day-streak commemorative NFT auditory
-/// art.
+/// @title {FiveFiveFive} NFT auditory art
+/// @author fiveoutofnine
 /// @notice A library for generating onchain audio for {FiveFiveFive}, which is
 /// a 24.832 second long audio 5-part arrangement of "Gonna Fly Now" by Bill
 /// Conti, popularly known as the theme song from the movie Rocky (1976) at

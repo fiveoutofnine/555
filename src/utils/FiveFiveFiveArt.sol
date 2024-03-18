@@ -9,13 +9,12 @@ import {FiveFiveFiveConstants} from "./FiveFiveFiveConstants.sol";
 import {FiveFiveFiveData} from "./FiveFiveFiveData.sol";
 import {IFiveFiveFive} from "src/interfaces/IFiveFiveFive.sol";
 
-/// @title 10000km ran in 555 (1000 × ⁵⁄₉) day-streak commemorative NFT visual
-/// art
+/// @title {FiveFiveFive} NFT visual art
+/// @author fiveoutofnine
 /// @notice A library for generating art (SVG and HTML) and metadata for
 /// {FiveFiveFive}.
 /// @dev The source code for this library is intended to be viewed with
 /// `Menlo, Monaco, 'Courier New', monospace`.
-/// @author fiveoutofnine
 library FiveFiveFiveArt {
     using DynamicBufferLib for DynamicBufferLib.DynamicBuffer;
     using LibString for uint256;

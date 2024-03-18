@@ -3,6 +3,7 @@ pragma solidity ^0.8.21;
 
 /// @title Utility library to return large strings for the {FiveFiveFive}
 /// contract
+/// @author fiveoutofnine
 /// @notice This library contains `public` getter functions for the large
 /// strings in the {FiveFiveFive} contract to get around the Spurious Dragon
 /// contract size limit.
