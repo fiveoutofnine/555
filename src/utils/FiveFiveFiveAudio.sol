@@ -145,10 +145,10 @@ library FiveFiveFiveAudio {
     /// @notice Returns the WAV file header for the audio file for 1 full cycle
     /// of the token's sound with the parameters the token's sound was generated
     /// with:
-    ///     * Size: 776.044921875kB (794670 bytes)
-    ///     * Number of channels: 1
-    ///     * Sample rate: 32000Hz
-    ///     * Bits/sample: 8 bits/sample
+    /// * Size: 776.044921875kB (794670 bytes)
+    /// * Number of channels: 1
+    /// * Sample rate: 32000Hz
+    /// * Bits/sample: 8 bits/sample
     function getAudioWavFileHeader() internal pure returns (bytes memory) {
         // Note: base-64 encoding the following hex string yields:
         // "UklGRi4gDABXQVZFZm10IBAAAAABAAEAAH0AAAB9AAABAAgAZGF0YQAgDACA".

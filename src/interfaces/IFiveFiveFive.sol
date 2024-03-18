@@ -106,16 +106,21 @@ interface IFiveFiveFive {
     /// @dev This function can only be called by the token's owner. `modified`
     /// MUST be set to `true` the first time this function is called for a
     /// token.
-    /// @param _background The background color behind the terminal window.
+    /// @param _background The background color behind the terminal window. e.g.
+    /// `0x000000`.
     /// @param _terminalBackground The background color of the terminal window.
-    /// @param _primary The color inner frames' borders and highlights.
-    /// @param _text The color of the primary text.
-    /// @param _subtext The color of the secondary text.
-    /// @param _label The color of the inner frames' labels.
-    /// @param _intent1 The color of the most positive intent.
-    /// @param _intent2 The color of the second most positive intent.
-    /// @param _intent3 The color of the second most negative intent.
-    /// @param _intent4 The color of the most negative intent.
+    /// e.g. `0x161616`.
+    /// @param _primary The color inner frames' borders and highlights. e.g.
+    /// `0x0090ff`.
+    /// @param _text The color of the primary text. e.g. `0xededed`.
+    /// @param _subtext The color of the secondary text. e.g. `0xa0a0a0`.
+    /// @param _label The color of the inner frames' labels. e.g. `0xff8b3e`.
+    /// @param _intent1 The color of the most positive intent. e.g. `0x4cc38a`.
+    /// @param _intent2 The color of the second most positive intent. e.g.
+    /// `0xf0c000`.
+    /// @param _intent3 The color of the second most negative intent. e.g.
+    /// `0xff8b3e`.
+    /// @param _intent4 The color of the most negative intent. e.g. `0xff6369`.
     function setTokenTheme(
         uint256 _id,
         uint24 _background,
@@ -137,10 +142,10 @@ interface IFiveFiveFive {
     /// @notice Returns the WAV file header for the audio file for 1 full cycle
     /// of the token's sound with the parameters the token's sound was generated
     /// with:
-    ///     * Size: 776.044921875kB (794670 bytes)
-    ///     * Number of channels: 1
-    ///     * Sample rate: 32000Hz
-    ///     * Bits/sample: 8 bits/sample
+    /// * Size: 776.044921875kB (794670 bytes)
+    /// * Number of channels: 1
+    /// * Sample rate: 32000Hz
+    /// * Bits/sample: 8 bits/sample
     function getAudioWavFileHeader() external pure returns (bytes memory);
 
     /// @notice Returns the sound value at a given time tick in the audio.
