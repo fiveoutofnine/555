@@ -30,7 +30,7 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
 
     /// @notice Price to mint a token.
     /// @dev Equivalent to (⁵⁄₉) / 10 ETH.
-    uint256 constant PRICE = 0.055555555555555555 ether;
+    uint256 constant PRICE = 0.055_555_555_555_555_555 ether;
 
     /// @notice Description of the collection.
     string constant COLLECTION_DESCRIPTION =
@@ -40,7 +40,7 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
         unicode" the metadata of each token contains a 100% onchain-generated 2"
         unicode"4.832 second long audio of a 5-part arrangement of “Gonna Fly N"
         unicode"ow” by Bill Conti, popularly known as the theme song from the m"
-        unicode"ovie Rocky (1976), at 117.1875 BPM";
+        unicode"ovie Rocky (1976), at 117.1875 BPM.";
 
     // -------------------------------------------------------------------------
     // Storage
@@ -139,9 +139,10 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
         if (msg.value < PRICE) revert InsufficientFunds();
 
         // Increment the next token ID;
-        _nextTokenId =
-            tokenId +
-            (tokenId == 374 || tokenId == 458 || tokenId == 554 ? 2 : 1);
+        unchecked {
+            _nextTokenId = tokenId
+                + (tokenId == 374 || tokenId == 458 || tokenId == 554 ? 2 : 1);
+        }
 
         // Mint token.
         _mint(msg.sender, tokenId);
@@ -167,9 +168,7 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
     // -------------------------------------------------------------------------
 
     /// @inheritdoc IFiveFiveFive
-    function getTokenTheme(
-        uint256 _id
-    ) external view override returns (Theme memory) {
+    function getTokenTheme(uint256 _id) external view override returns (Theme memory) {
         // Revert if the token hasn't been minted.
         if (_ownerOf[_id] == address(0)) revert TokenUnminted();
 
@@ -242,9 +241,7 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
     }
 
     /// @inheritdoc IFiveFiveFive
-    function getSoundValueAtSample(
-        uint256 _tick
-    ) external pure returns (uint8) {
+    function getSoundValueAtSample(uint256 _tick) external pure returns (uint8) {
         return FiveFiveFiveAudio.getSoundValueAtSample(_tick);
     }
 
@@ -258,9 +255,7 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
     /// {_tokenURI(uint256)}. Otherwise, it will return `baseURI + tokenId`.
     /// @param _id The token ID.
     /// @return The adjusted URI for the given token ID.
-    function tokenURI(
-        uint256 _id
-    ) public view override returns (string memory) {
+    function tokenURI(uint256 _id) public view override returns (string memory) {
         // Revert if the token hasn't been minted.
         if (_ownerOf[_id] == address(0)) revert TokenUnminted();
 
