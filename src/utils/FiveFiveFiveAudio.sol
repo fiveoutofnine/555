@@ -125,12 +125,12 @@ library FiveFiveFiveAudio {
         uint256 n64x;
         uint256 n64y;
         assembly {
-            _tick := mod(_tick, shl(10, 776))
-            n64 := mod(shr(10, _tick), 776)
-            n16 := shr(2, n64)
-            tickWad := mul(_tick, 1000000000000000000)
-            n64x := shr(3, n64)
-            n64y := sub(7, and(n64, 7))
+            _tick := mod(_tick, shl(10, 776)) // `_tick % (776 << 10)`
+            n64 := mod(shr(10, _tick), 776) // `(_tick >> 10) % 776`
+            n16 := shr(2, n64) // `n64 >> 2`
+            tickWad := mul(_tick, 1000000000000000000) // `_tick * 1e18`
+            n64x := shr(3, n64) // `n64 >> 3`
+            n64y := sub(7, and(n64, 7)) // `7 - (n64 & 7)`
         }
 
         unchecked {
@@ -170,6 +170,7 @@ library FiveFiveFiveAudio {
             // Ending note.
             uint256 ending = n16 > 173 ? _synth(tickWad, 21e18, 0) : 0;
 
+            // Add all 5 lines together.
             return uint8(synth1 + synth2 + bass1 + bass2 + snare + glissando + ending);
         }
     }
@@ -181,6 +182,8 @@ library FiveFiveFiveAudio {
 
     /// @notice Returns the sound value of a note of an 8-bit synth wave with
     /// vibrato at a given time tick.
+    /// @dev Altogether, in pseudo-code, the function is equivalent to
+    /// `0.392 * (tick + 12 * sin(tick / 1600)) * 2 ** (note / 12 - pitch)`.
     /// @param _tickWad The time tick at which to get the sound value, as an 18
     /// decimal fixed-point value.
     /// @param _note The note to get the sound value of, where C3 is 5, and 1
@@ -197,13 +200,18 @@ library FiveFiveFiveAudio {
         // Next, calculate the vibration and sound value of the note at the
         // given `_tickWad`.
         unchecked {
+            // Equivalent to `tick + 12 * sin(tick / 1600)`.
             int256 vibration = int256(_tickWad) + _sin(_tickWad.divWad(1600e18)).sMulWad(12e18);
+            // Equivalent to `2**(note / 12 - pitch)`.
             int256 noteSoundValue = int256(2e18).powWad(int256(_note.divWad(12e18)) - _pitch);
+            // Equivalent to `0.392 * vibration * noteSoundValue`.
             int256 soundValue = int256(0.392e18).sMulWad(vibration).sMulWad(noteSoundValue);
             assembly {
+                // Equivalent to `soundValue / 1e18`.
                 soundValue := div(soundValue, 1000000000000000000)
             }
 
+            // Here, we truncate the sound value with `& 32` and then halve it.
             return uint8(uint256(soundValue.abs()) & 32) >> 1;
         }
     }
@@ -223,13 +231,14 @@ library FiveFiveFiveAudio {
         int256 a;
         int256 b;
         assembly {
+            // Equivalent to `_x % 4e18`.
             a := mod(_x, 4000000000000000000)
+            // Equivalent to `(_x / 1e18) & 3 > 2 ? -1 : 1`.
             b := add(mul(gt(and(div(_x, 1000000000000000000), 3), 2), sub(not(0), 1)), 1)
         }
 
         // Whether to negate the result of the `_cos` function (because we only
         // get half the range from the Taylor series approximation).
-
         unchecked {
             return b * _cos(a - 2e18);
         }
@@ -237,6 +246,8 @@ library FiveFiveFiveAudio {
 
     /// @notice Returns a 4-term Taylor series approximation for the `cos`
     /// function.
+    /// @dev Altogether, in pseudo-code, the function is equivalent to
+    /// `1 - x**2/2! + x**4/4! - x**6/6!`.
     /// @param _x An 18 decimal fixed-point value.
     /// @return The approximated value of `cos(_x)` as an 18 decimal fixed-point
     /// value.
