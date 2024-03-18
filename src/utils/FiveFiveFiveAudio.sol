@@ -194,6 +194,11 @@ library FiveFiveFiveAudio {
         return uint8(uint256(soundValue.abs()) & 32) >> 1;
     }
 
+    /// @notice An approximation of the `sin` function (with transformations)
+    /// that composes the helper function {FiveFiveFiveAudio._cos}.
+    /// @param _x An 18 decimal fixed-point value.
+    /// @return The approximated value of `sin(_x)` as an 18 decimal fixed-point
+    /// value.
     function _sin(uint256 _x) internal pure returns (int256) {
         return
             _cos(int256(_x % 4e18) - 2e18).sMulWad(
@@ -201,6 +206,11 @@ library FiveFiveFiveAudio {
             );
     }
 
+    /// @notice Returns a 4-term Taylor series approximation for the `cos`
+    /// function.
+    /// @param _x An 18 decimal fixed-point value.
+    /// @return The approximated value of `cos(_x)` as an 18 decimal fixed-point
+    /// value.
     function _cos(int256 _x) internal pure returns (int256) {
         // First, calculate the 2nd, 4th, and 6th powers of `_x`.
         int256 x2 = _x.sMulWad(_x);
@@ -215,6 +225,8 @@ library FiveFiveFiveAudio {
 
         // Finally, calculate the value of `cos(x)` using the Taylor series
         // expansion.
-        return 1e18 - t1 + t2 - t3;
+        unchecked {
+            return 1e18 - t1 + t2 - t3;
+        }
     }
 }
