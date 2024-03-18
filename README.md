@@ -33,7 +33,52 @@ For practicality, the metadata returned by `tokenURI` accomplishes [**this with 
 This repo provides a Foundry script [`GenerateAudioOutputScript`](https://github.com/fiveoutofnine/555/blob/main/script/GenerateAudioOutput.s.sol) to generate and write the audio file to `./output/wav/rocky.wav`. To run the script, run the following command:
 
 ```sh
-forge script script/GenerateAudioOutput.s.sol --via-ir --memory-limit="50000000000"
+forge script script/GenerateAudioOutput.s.sol:GenerateAudioOutputScript --via-ir --memory-limit="50000000000"
 ```
 
 You can listen to the generated output [here](https://github.com/fiveoutofnine/555/blob/main/assets/rocky.wav).
+
+## Deployment
+
+WIP.
+
+## Local development
+
+This project uses [**Foundry**](https://github.com/foundry-rs/foundry) as its development/testing framework.
+
+### Installation
+
+First, make sure you have Foundry installed. Then, run the following commands to clone the repo and install its dependencies:
+
+```sh
+git clone https://github.com/fiveoutofnine/555.git
+cd 555
+forge install
+```
+
+### Data value generation
+
+To generate the [**bitpacked mileage and location data**](https://github.com/fiveoutofnine/555/blob/main/src/utils/FiveFiveFiveData.sol) for the metadata renderer to read from (i.e. [`FiveFiveFiveData`](https://github.com/fiveoutofnine/555/blob/main/src/utils/FiveFiveFiveData.sol)), this repo provides 2 Python scripts to run: [`generation-location-data.py`](https://github.com/fiveoutofnine/555/blob/main/metadata/generate-location-data.py) and [`generation-running-data.py`](https://github.com/fiveoutofnine/555/blob/main/metadata/generate-running-data.py). To generate, test, and print them, run the following commands from the root of the project:
+
+```sh
+python3 ./metadata/generate-location-data.py
+python3 ./metadata/generate-running-data.py
+```
+
+Then, after you've added/updated the values, you can run the following command to test print values retrieved via [`PrintDataScript`](https://github.com/fiveoutofnine/555/blob/main/script/PrintData.s.sol):
+
+```sh
+forge script script/PrintData.s.sol:PrintDataScript -vvv --via-ir
+```
+
+### Font generation
+
+To generate the [**optimized font files**](https://github.com/fiveoutofnine/555/blob/c4ef5ab0e110895105a061fd6bc0b174b776dabb/src/utils/FiveFiveFiveConstants.sol#L16), see [**GENERATING_FONTS.md**](https://github.com/fiveoutofnine/555/blob/main/GENERATING_FONTS.md).
+
+### Sample art (SVG and HTML) and metadata generation
+
+To generate and write the base64-encoded JSON outputs to `./output/txt/{token_id}.txt`, follow the instructions in [`GenerateAudioOutputScript`](https://github.com/fiveoutofnine/555/blob/main/script/GenerateAudioOutput.s.sol) and run the following command:
+
+```sh
+forge script script/GenerateAudioOutput.s.sol:GenerateAudioOutput -vvv --via-ir
+```
