@@ -13,7 +13,7 @@ import {FiveFiveFiveAudio} from "src/utils/FiveFiveFiveAudio.sol";
 /// @notice A script to create and write the WAV audio file of the arrangement of
 /// "Gonna Fly Now" by Bill Conti 100% with smart contracts.
 /// @dev You must run this script with a high `--memory-limit` option (e.g.
-/// `50_000_000_000` works).
+/// `50_000_000_000` works) and `--via-ir`.
 contract GenerateAudioOutputScript is Script {
     using DynamicBufferLib for DynamicBufferLib.DynamicBuffer;
     using LibString for uint256;
@@ -48,10 +48,7 @@ contract GenerateAudioOutputScript is Script {
         // `data`.
         bytes memory data = new bytes(TICKS_PER_CYCLE);
         for (uint256 tick; tick < TICKS_PER_CYCLE; ) {
-            uint8 soundValue = FiveFiveFiveAudio.getSoundValueAtSample(
-                tickOffset + tick
-            );
-            data[tick] = bytes1(soundValue);
+            data[tick] = bytes1(FiveFiveFiveAudio.getSoundValueAtSample(tick));
 
             unchecked {
                 ++tick;

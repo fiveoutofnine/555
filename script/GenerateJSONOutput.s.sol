@@ -8,15 +8,20 @@ import {LibString} from "solady/utils/LibString.sol";
 import {IFiveFiveFive} from "src/interfaces/IFiveFiveFive.sol";
 import {FiveFiveFiveArt} from "src/utils/FiveFiveFiveArt.sol";
 
-contract PrintJSONOutputScript is Script {
+/// @notice A script to create and write the base64-encoded JSON output of a
+/// given token's metadata, directly from the utility library.
+/// @dev You must run this script with `--via-ir`.
+contract GenerateJSONOutputScript is Script {
     using LibString for uint256;
 
     // -------------------------------------------------------------------------
     // Script `run()`
     // -------------------------------------------------------------------------
 
+    /// @notice Calls the {FiveFiveFiveArt} library to generate the JSON output
+    /// for a given token ID `i` and writes it `./output/json/{i}.json`.
     function run() public {
-        for (uint256 i = 0; i < 555; ) {
+        for (uint256 i; i < 555; ) {
             vm.writeFile(
                 string.concat("./output/txt/", (i + 1).toString(), ".txt"),
                 FiveFiveFiveArt.render({
