@@ -224,7 +224,8 @@ library FiveFiveFiveConstants {
     // Public getters
     // -------------------------------------------------------------------------
 
-    /// @notice Returns the `<style>` header for {FiveFiveFiveArt}'s inner HTML.
+    /// @notice Returns the starting string for the `<style>` header in
+    /// {FiveFiveFiveArt}'s inner HTML.
     function getStyleHeader() public pure returns (string memory) {
         return STYLE_HEADER;
     }

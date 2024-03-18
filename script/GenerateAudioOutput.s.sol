@@ -10,8 +10,8 @@ import {FixedPointMathLib as Math} from "solady/utils/FixedPointMathLib.sol";
 
 import {FiveFiveFiveAudio} from "src/utils/FiveFiveFiveAudio.sol";
 
-/// @notice A script to create and write the WAV audio file of the arrangement of
-/// "Gonna Fly Now" by Bill Conti 100% with smart contracts.
+/// @notice A script to create and write the WAV audio file of the arrangement
+/// of “Gonna Fly Now” by Bill Conti completely with smart contracts.
 /// @dev You must run this script with a high `--memory-limit` option (e.g.
 /// `50_000_000_000` works) and `--via-ir`.
 contract GenerateAudioOutputScript is Script {

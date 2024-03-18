@@ -2,8 +2,9 @@
 pragma solidity ^0.8.21;
 
 /// @title Mileage and location data for each of the 555 days of running
-/// @notice A library for generating art and metadata for {FiveFiveFiveArt}.
 /// @author fiveoutofnine
+/// @notice A library for retrieving mileage and location data to render the art
+/// and metadata in {FiveFiveFiveArt}.
 library FiveFiveFiveData {
     // -------------------------------------------------------------------------
     // Constants

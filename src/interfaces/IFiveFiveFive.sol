@@ -2,6 +2,7 @@
 pragma solidity ^0.8.21;
 
 /// @title The interface for {FiveFiveFive}
+/// @author fiveoutofnine
 interface IFiveFiveFive {
     // -------------------------------------------------------------------------
     // Errors

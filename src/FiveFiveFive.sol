@@ -10,14 +10,14 @@ import {IFiveFiveFive} from "./interfaces/IFiveFiveFive.sol";
 import {FiveFiveFiveArt} from "./utils/FiveFiveFiveArt.sol";
 import {FiveFiveFiveAudio} from "./utils/FiveFiveFiveAudio.sol";
 
-/// @title 10000km ran in 555 (1000 × ⁵⁄₉) day-streak commemorative NFTs
+/// @title 555 (1000 × ⁵⁄₉) NFTs
 /// @author fiveoutofnine
 /// @notice A ⁵⁄₉-themed NFT to commemorate me running 10000km in 555 days of
 /// running everyday. For each token, in addition to displaying information
-/// about the day's run, the metadata of each token contains a 100%
-/// onchain-generated 24.832 second long audio 5-part arrangement of "Gonna Fly
-/// Now" by Bill Conti, popularly known as the theme song from the movie Rocky
-/// (1976) at 117.1875 BPM.
+/// about the day's run with a themeable color palette, the metadata of each
+/// token contains a 100% onchain-generated 24.832 second long audio of a 5-part
+/// arrangement of “Gonna Fly Now” by Bill Conti, popularly known as the theme
+/// song from the movie Rocky (1976), at 117.1875 BPM.
 contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
     using LibString for uint256;
 
@@ -36,10 +36,11 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
     string constant COLLECTION_DESCRIPTION =
         unicode"A ⁵⁄₉-themed NFT to commemorate me running 10000km in 555 days "
         unicode"of running everyday. For each token, in addition to displaying "
-        unicode"information about the day's run, the metadata of each token con"
-        unicode"tains a 100% onchain-generated 24.832 second long audio 5-part "
-        unicode'arrangement of "Gonna Fly Now" by Bill Conti, popularly known a'
-        unicode"s the theme song from the movie Rocky (1976) at 117.1875 BPM.";
+        unicode"information about the day's run with a themeable color palette,"
+        unicode" the metadata of each token contains a 100% onchain-generated 2"
+        unicode"4.832 second long audio of a 5-part arrangement of “Gonna Fly N"
+        unicode"ow” by Bill Conti, popularly known as the theme song from the m"
+        unicode"ovie Rocky (1976), at 117.1875 BPM";
 
     // -------------------------------------------------------------------------
     // Storage
@@ -64,7 +65,7 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
     // -------------------------------------------------------------------------
 
     constructor()
-        ERC721("10000km in 555 everydays", "555")
+        ERC721(unicode"555 (1000 × ⁵⁄₉)", "555")
         Owned(FIVEOUTOFNINE)
     {
         // shanefan.eth gets #1.
@@ -303,10 +304,10 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
     function contractURI() external pure override returns (string memory) {
         return
             string.concat(
-                "data:application/json;base64,",
+                "data:application/json;charset=utf-8;base64,",
                 Base64.encode(
                     abi.encodePacked(
-                        '{"name":"10000km in 555 everydays","description":"',
+                        unicode'{"name":"555 (1000 × ⁵⁄₉)","description":"',
                         COLLECTION_DESCRIPTION,
                         '"}'
                     )

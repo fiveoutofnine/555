@@ -6,12 +6,12 @@ import {FixedPointMathLib as Math} from "solady/utils/FixedPointMathLib.sol";
 /// @title {FiveFiveFive} NFT auditory art
 /// @author fiveoutofnine
 /// @notice A library for generating onchain audio for {FiveFiveFive}, which is
-/// a 24.832 second long audio 5-part arrangement of "Gonna Fly Now" by Bill
-/// Conti, popularly known as the theme song from the movie Rocky (1976) at
-/// 117.1875 BPM.
+/// a 24.832 second long audio of a 5-part arrangement of "Gonna Fly Now" by
+/// Bill Conti, popularly known as the theme song from the movie Rocky (1976),
+/// at 117.1875 BPM.
 /// @dev The metadata returned by {FiveFiveFive} doesn't use this library for
 /// practical reasons. However, the same result can be yielded by calling
-/// {getSoundValueAtSample} for each sample in the range `[0, 794624]` and
+/// {getSoundValueAtSample} for each sample in the range `[0, 794623]` and
 /// concatenating the result, prefixed with the header returned by
 /// {getAudioWavFileHeader}.
 library FiveFiveFiveAudio {
@@ -22,11 +22,25 @@ library FiveFiveFiveAudio {
     // Constants
     // -------------------------------------------------------------------------
 
+    /// @notice A beatmap of when the 1st synth line is active in the audio,
+    /// where each `1` bit represents a 1/64th note, or 1024 ticks, being
+    /// played.
+    /// @dev The beatmap ranges the entire length of 1 cycle for 1/64th notes
+    /// with indices in `[0, 775]`, where the `i`th MSb is the corresponding
+    /// data.
     bytes internal constant SYNTH_1_BEATMAP =
         hex"fefeeefeeefeeefefefeeefeeefeeefe00feeefeefeefffefefeeeefeffffeeffe"
         hex"fffffffffffeeffefffffffffffeeffefffffffffffeeffefffffffffffffffe00"
         hex"eeffeeeffffffe00eefeefeefffefefefefefefefeffffffffffffffffffff";
 
+    /// @notice A bitpacked value of 8-bit words representing the notes of the
+    /// 1st synth line, where each note is a 1/16th note, or 4096 ticks.
+    /// @dev A value of `0x05` corresponds to C3, and 1 corresponds to a
+    /// semitone. To attain the intended note value, it requires no
+    /// transpositions, so the `_pitch` parameter passed into `_synth` should be
+    /// set to `0`. Also, this value ranges the entire length of 1 cycle for
+    /// 1/16th notes with indices in `[0, 193]`, where the `i`th MSb is the
+    /// corresponding data.
     bytes internal constant SYNTH_1_NOTES =
         hex"05050505050505050505090905050505090909090909090909090c0c0909090909"
         hex"090909090909090909090909090909090909090909090909090909090915181818"
@@ -35,6 +49,13 @@ library FiveFiveFiveAudio {
         hex"070507070705070909090909090911111111111111111111111111111616151515"
         hex"1515151515151515151515151515151515151515151515151515151515";
 
+    /// @notice A bitpacked value of 8-bit words representing the notes of the
+    /// 2nd synth line, where each note is a 1/16th note, or 4096 ticks.
+    /// @dev A value of `0x1d` corresponds to C3, and 1 corresponds to a
+    /// semitone. To attain the intended note value, it must be transposed down
+    /// by 2 octaves, so the `_pitch` parameter passed into `_synth` should be
+    /// set to `2e18`. Also, this value ranges 1/16th notes with indices in
+    /// `[16, 165]`, where the `i`th MSb is the corresponding data.
     bytes internal constant SYNTH_2_NOTES =
         hex"080808080808080808080808080808081d1d1d1d1d1d1d1d1d1d21211d1d1d1d1c"
         hex"1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c21242424"
@@ -43,11 +64,25 @@ library FiveFiveFiveAudio {
         hex"1f1d1f1f1f1d1f212121212121211d1d1d1d1c1c1c1a1a1a181818181d1d1d1d1d"
         hex"1d";
 
+    /// @notice A beatmap of when the 1st bass line is active in the audio,
+    /// where each `1` bit represents a 1/64th note, or 1024 ticks, being
+    /// played.
+    /// @dev The beatmap ranges the entire length of 1 cycle for 1/64th notes
+    /// with indices in `[0, 775]`, where the `i`th MSb is the corresponding
+    /// data.
     bytes internal constant BASS_1_BEATMAP =
         hex"0000000000000000000000000000000000000000000000fffefffffffffffffffe"
         hex"fffefffefffefffefffefffefffefffefffefffefffefffefffefffefffefffeff"
         hex"fefffefffefffe00eefeefeefffefefefeeffefeefffffffffffffffffffff";
 
+    /// @notice A bitpacked value of 8-bit words representing the notes of the
+    /// 1st bass line, where each note is a 1/16th note, or 4096 ticks.
+    /// @dev A value of `0x35` corresponds to C3, and 1 corresponds to a
+    /// semitone. To attain the intended note value, it must be transposed down
+    /// by 4 octaves, so the `_pitch` parameter passed into `_synth` should be
+    /// set to `4e18`. Also, this value ranges the entire length of 1 cycle for
+    /// 1/16th notes with indices in `[0, 193]`, where the `i`th MSb is the
+    /// corresponding data.
     bytes internal constant BASS_1_NOTES =
         hex"080808080808080808080808080808080808080808080808080808080808080808"
         hex"080808080808080808080808082e2e2e2e2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d"
@@ -56,11 +91,25 @@ library FiveFiveFiveAudio {
         hex"323232323232303030303030303032323232323232323232303030303030303030"
         hex"3030303030303030303030303030303030303030303030303030303030";
 
+    /// @notice A beatmap of when the 2nd bass line is active in the audio,
+    /// where each `1` bit represents a 1/64th note, or 1024 ticks, being
+    /// played.
+    /// @dev The beatmap ranges the entire length of 1 cycle for 1/64th notes
+    /// with indices in `[0, 775]`, where the `i`th MSb is the corresponding
+    /// data.
     bytes internal constant BASS_2_BEATMAP =
         hex"0000000000000000000000000000000000fffffffffffefffefffffffffffffffe"
         hex"fefefffeeefefefefefefffeeefefefefefeffeeeefefefefefeffeeeefeeeeeff"
         hex"ffffeefeffefeefeffffffeefeeeeefeeefefefefeffffffffffffffffffff";
 
+    /// @notice A bitpacked value of 8-bit words representing the notes of the
+    /// 2nd bass line, where each note is a 1/16th note, or 4096 ticks.
+    /// @dev A value of `0x35` corresponds to C3, and 1 corresponds to a
+    /// semitone. To attain the intended note value, it must be transposed down
+    /// by 4 octaves, so the `_pitch` parameter passed into `_synth` should be
+    /// set to `4e18`. Also, this value ranges the entire length of 1 cycle for
+    /// 1/16th notes with indices in `[0, 193]`, where the `i`th MSb is the
+    /// corresponding data.
     bytes internal constant BASS_2_NOTES =
         hex"080808080808080808080808080808080808080808080808080808080808080808"
         hex"082828282828282828282828282222222221212121212121212121212121212121"
@@ -69,10 +118,23 @@ library FiveFiveFiveAudio {
         hex"1f1f1f1f1f1f21212121212121212222222222222222222e2e2e2e22222221212d"
         hex"2d2d2d2d2d212121212121212121212121212121212121212121212121";
 
+    /// @notice A beatmap of when the snare line is active in the audio, where
+    /// where each `1` bit represents a 1/64th note, or 1024 ticks, being
+    /// played.
+    /// @dev The beatmap ranges 1/64th notes with indices in `[236, 711]`,
+    /// where the `i - 236`th MSb is the corresponding data.
     bytes internal constant SNARE_BEATMAP =
         hex"ee0e0e0e000e0000000e000e000e0000000e000e000e0000000e000e000e000000"
         hex"0e000e000e0000000e000e000e0000000e000e0e0e0e0e0e0e0000";
 
+    /// @notice A bitpacked value of 8-bit words representing the notes of the
+    /// ending glissando synth line, where each note is a 1/32nd note, or 2048
+    /// ticks.
+    /// @dev A value of `0x05` corresponds to C3, and 1 corresponds to a
+    /// semitone. To attain the intended note value, it requires no
+    /// transpositions, so the `_pitch` parameter passed into `_synth` should be
+    /// set to `0`. Also, this value ranges 1/32nd notes with the indicies in
+    /// `[332, 347]`, where the `i - 332`th MSb is the corresponding data.
     bytes internal constant SYNTH_GLISSANDO =
         hex"0507090a0c0e101113151617191b1c1e";
 
@@ -172,6 +234,12 @@ library FiveFiveFiveAudio {
     // Helpers
     // -------------------------------------------------------------------------
 
+    /// @notice Returns the note value of a note at a given 1/16th note index
+    /// of a given bitpacked value as an 18 decimal fixed-point number.
+    /// @param _data The bitpacked value of 8-bit words representing the notes
+    /// of a line.
+    /// @param _n16 The 1/16th note index of the note to get the value of.
+    /// @return The note value, as an 18 decimal fixed-point number.
     function _getNote(bytes memory _data, uint256 _n16) internal pure returns (uint256) {
         unchecked {
             return 1e18 * uint256(uint8(_data[_n16]));
