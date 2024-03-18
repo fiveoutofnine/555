@@ -125,27 +125,29 @@ library FiveFiveFiveAudio {
 
         uint256 n64;
         uint256 n16;
+        uint256 tickWad;
         assembly {
             n64 := mod(shr(10, _tick), 776)
             n16 := shr(2, n64)
+            tickWad := mul(_tick, 1000000000000000000)
         }
 
         // Synth 1.
         uint256 synth1b = (uint8(SYNTH_1_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1;
-        uint256 synth1 = synth1b * _synth(_tick, 1e18 * uint256(uint8(SYNTH_1_NOTES[n16])), 0);
+        uint256 synth1 = synth1b * _synth(tickWad, 1e18 * uint256(uint8(SYNTH_1_NOTES[n16])), 0);
 
         // Synth 2.
         bool synth2b;
         assembly { synth2b := and(synth1b, and(gt(n16, 15), lt(n16, 166))) }
-        uint256 synth2 = synth2b ? _synth(_tick, 1e18 * uint256(uint8(SYNTH_2_NOTES[n16])), 2e18) : 0;
+        uint256 synth2 = synth2b ? _synth(tickWad, 1e18 * uint256(uint8(SYNTH_2_NOTES[n16])), 2e18) : 0;
 
         // Bass 1.
         uint256 bass1b = (uint8(BASS_1_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1;
-        uint256 bass1 = bass1b * _synth(_tick, 1e18 * uint256(uint8(BASS_1_NOTES[n16])), 4e18); 
+        uint256 bass1 = bass1b * _synth(tickWad, 1e18 * uint256(uint8(BASS_1_NOTES[n16])), 4e18); 
 
         // Bass 2.
         uint256 bass2b = (uint8(BASS_2_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1;
-        uint256 bass2 = bass2b * _synth(_tick, 1e18 * uint256(uint8(BASS_2_NOTES[n16])), 4e18);
+        uint256 bass2 = bass2b * _synth(tickWad, 1e18 * uint256(uint8(BASS_2_NOTES[n16])), 4e18);
 
         // Snare.
         bool snareb;
@@ -154,18 +156,18 @@ library FiveFiveFiveAudio {
         uint256 snareb1 = (uint8(SNARE_BEATMAP[snarebi >> 3]) >> (7 - (snarebi & 7))) & 1;
         assembly { snareb := and(snareb, snareb1) }
         // ((2e11*(t/(1<<14))**2)&255)/5
-        uint256 snareV = uint256(2e29).mulWad((_tick * 1e18).divWad(1e18 << 14));
+        uint256 snareV = uint256(2e29).mulWad(tickWad.divWad(1e18 << 14));
         uint256 snare = snareb
             ? ((snareV.mulWad(snareV) / 1e18) & 255) / 10
             : 0;
 
         // Glissando.
         uint256 glissando = n16 > 165 && n16 < 174
-            ? _synth(_tick, 1e18 * uint256(uint8(SYNTH_GLISSANDO[(n64 >> 1) - 332])), 0)
+            ? _synth(tickWad, 1e18 * uint256(uint8(SYNTH_GLISSANDO[(n64 >> 1) - 332])), 0)
             : 0;
 
         // Ending note.
-        uint256 ending = n16 > 173 ? _synth(_tick, 21e18, 0) : 0;
+        uint256 ending = n16 > 173 ? _synth(tickWad, 21e18, 0) : 0;
 
         return uint8(synth1 + synth2 + bass1 + bass2 + snare + glissando + ending);
     }
@@ -175,17 +177,14 @@ library FiveFiveFiveAudio {
     // -------------------------------------------------------------------------
 
     function _synth(
-        uint256 _tick,
+        uint256 _tickWad,
         uint256 _note,
         int256 _pitch
     ) internal pure returns (uint8) {
-        // First, convert `_tick` to a fixed-point value.
-        uint256 tickWad = _tick * 1e18;
-
         // Next, calculate the vibration and sound value of the note at the
-        // given `_tick`.
-        int256 vibration = int256(tickWad) +
-            _sin(tickWad.divWad(1600e18)).sMulWad(12e18);
+        // given `_tickWad`.
+        int256 vibration = int256(_tickWad) +
+            _sin(_tickWad.divWad(1600e18)).sMulWad(12e18);
         int256 noteSoundValue = int256(2e18).powWad(
             int256(_note.divWad(12e18)) - _pitch
         );
