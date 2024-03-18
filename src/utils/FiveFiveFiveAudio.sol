@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.21;
 
-import { FixedPointMathLib as Math } from "solady/utils/FixedPointMathLib.sol";
+import {FixedPointMathLib as Math} from "solady/utils/FixedPointMathLib.sol";
 
 /// @title {FiveFiveFive} NFT auditory art
 /// @author fiveoutofnine
@@ -190,11 +190,7 @@ library FiveFiveFiveAudio {
     /// decimal fixed-point value.
     /// @return The sound value of the note at the given time tick, a value in
     /// the range `[0, 15]` (higher means louder).
-    function _synth(
-        uint256 _tickWad,
-        uint256 _note,
-        int256 _pitch
-    ) internal pure returns (uint8) {
+    function _synth(uint256 _tickWad, uint256 _note, int256 _pitch) internal pure returns (uint8) {
         // Next, calculate the vibration and sound value of the note at the
         // given `_tickWad`.
         unchecked {

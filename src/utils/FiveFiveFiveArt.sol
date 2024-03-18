@@ -276,11 +276,7 @@ library FiveFiveFiveArt {
         }
 
         // Return token URI.
-        return
-            string.concat(
-                "data:json/application;base64,",
-                Base64.encode(jsonData)
-            );
+        return string.concat("data:json/application;base64,", Base64.encode(jsonData));
     }
 
     /// @notice Helper function to render each segment of the workload gradient
@@ -288,15 +284,12 @@ library FiveFiveFiveArt {
     /// @dev Assumes `_count` is in `[0, 6]`.
     /// @param _count Number of workload gradient bars to render.
     /// @return String representing the workload gradient bars.
-    function getWorkloadSegment(
-        uint256 _count
-    ) internal pure returns (string memory) {
-        return
-            string.concat(
-                LibString.repeat(unicode"▮", _count),
-                '<span class="i">',
-                LibString.repeat(".", 6 - _count),
-                "</span>"
-            );
+    function getWorkloadSegment(uint256 _count) internal pure returns (string memory) {
+        return string.concat(
+            LibString.repeat(unicode"▮", _count),
+            '<span class="i">',
+            LibString.repeat(".", 6 - _count),
+            "</span>"
+        );
     }
 }

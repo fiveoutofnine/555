@@ -1,0 +1,7 @@
+{
+  "editor.formatOnSave": false,
+  "editor.inlineSuggest.enabled": true,
+  "editor.rulers": [80, 100],
+  "editor.tabSize": 4,
+  "typescript.updateImportsOnFileMove.enabled": "always"
+}
