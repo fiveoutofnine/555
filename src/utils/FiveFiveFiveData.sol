@@ -73,9 +73,7 @@ library FiveFiveFiveData {
     /// @param _day 0-indexed day to get the location data for.
     /// @return string memory The name of the city the run took place.
     /// @return uint256 The length of the city's name.
-    function getDayLocation(
-        uint256 _day
-    ) internal pure returns (string memory, uint256) {
+    function getDayLocation(uint256 _day) internal pure returns (string memory, uint256) {
         // The corresponding location data is stored at bits
         // `[4 * _day + 4, 4 * _day + 8)`, so the index of the byte we want to
         // retrieve is `(4 * _ day + 4) >> 3`, which is equivalent to
@@ -85,8 +83,7 @@ library FiveFiveFiveData {
             // Equivalent to `index = (_day + 1) >> 1`.
             index := shr(1, add(_day, 1))
         }
-        uint256 value = (uint8(LOCATION_DATA[index]) >>
-            (_day & 1 == 0 ? 0 : 4)) & 0xf;
+        uint256 value = (uint8(LOCATION_DATA[index]) >> (_day & 1 == 0 ? 0 : 4)) & 0xf;
 
         if (value == 0) return ("new york city", 13);
         if (value == 1) return ("san francisco", 13);
@@ -137,9 +134,7 @@ library FiveFiveFiveData {
                 // significant bits. Similarly, if `_day` is odd, the relevant
                 // data is stored at the first byte's 8 least significant bits,
                 // and the second byte's 4 most significant bits.
-                _day & 1 == 0
-                    ? ((a & 0xf) << 8) | b
-                    : (a << 4) | ((b >> 4) & 0xf);
+                _day & 1 == 0 ? ((a & 0xf) << 8) | b : (a << 4) | ((b >> 4) & 0xf);
         }
     }
 }

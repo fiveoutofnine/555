@@ -29,30 +29,26 @@ library FiveFiveFiveArt {
     /// @param _day 0-indexed day.
     /// @param _theme The theme to use for the token.
     /// @return JSON output representing the 555 token.
-    function render(
-        uint256 _day,
-        IFiveFiveFive.Theme memory _theme
-    ) public pure returns (string memory) {
+    function render(uint256 _day, IFiveFiveFive.Theme memory _theme)
+        public
+        pure
+        returns (string memory) {
         uint256 id = _day + 1;
 
         // Retrieve data for the day.
         uint256 distance = FiveFiveFiveData.getDayMileage(_day);
-        (string memory locationName, uint256 locationLength) = FiveFiveFiveData
-            .getDayLocation(_day);
-        uint256 workload = distance +
-            (_day > 0 ? FiveFiveFiveData.getDayMileage(_day - 1) : 0) +
-            (_day > 1 ? FiveFiveFiveData.getDayMileage(_day - 2) : 0) +
-            (_day > 2 ? FiveFiveFiveData.getDayMileage(_day - 3) : 0) +
-            (_day > 3 ? FiveFiveFiveData.getDayMileage(_day - 4) : 0) +
-            (_day > 4 ? FiveFiveFiveData.getDayMileage(_day - 5) : 0) +
-            (_day > 5 ? FiveFiveFiveData.getDayMileage(_day - 6) : 0);
+        (string memory locationName, uint256 locationLength) = FiveFiveFiveData.getDayLocation(_day);
+        uint256 workload = distance
+            + (_day > 0 ? FiveFiveFiveData.getDayMileage(_day - 1) : 0)
+            + (_day > 1 ? FiveFiveFiveData.getDayMileage(_day - 2) : 0)
+            + (_day > 2 ? FiveFiveFiveData.getDayMileage(_day - 3) : 0)
+            + (_day > 3 ? FiveFiveFiveData.getDayMileage(_day - 4) : 0)
+            + (_day > 4 ? FiveFiveFiveData.getDayMileage(_day - 5) : 0)
+            + (_day > 5 ? FiveFiveFiveData.getDayMileage(_day - 6) : 0);
 
         // Split distance and workload into km and m.
         (uint256 km, uint256 m) = (distance / 100, distance % 100);
-        (uint256 workloadKm, uint256 workloadM) = (
-            workload / 100,
-            workload % 100
-        );
+        (uint256 workloadKm, uint256 workloadM) = (workload / 100, workload % 100);
         uint256 workloadBars = workload > 80_00 ? (workload - 80_00) / 467 : 0;
 
         // Generate styles.
@@ -106,9 +102,7 @@ library FiveFiveFiveArt {
                 // 0-pad day number to 3 digits.
                 id < 10
                     ? '<span class="y i">00</span>'
-                    : id < 100
-                        ? '<span class="y i">0</span>'
-                        : "",
+                    : id < 100 ? '<span class="y i">0</span>' : "",
                 '<span class="n f">',
                 id.toString(),
                 unicode'</span> ║ <span class="n f">',
@@ -149,21 +143,15 @@ library FiveFiveFiveArt {
                 '</span><span class="u">',
                 workloadBars > 11 ? unicode"▮▮▮▮▮▮" : "",
                 workloadBars < 7 ? '<span class="i">......</span>' : "",
-                workloadBars > 6 && workloadBars < 12
-                    ? getWorkloadSegment(workloadBars - 6)
-                    : "",
+                workloadBars > 6 && workloadBars < 12 ? getWorkloadSegment(workloadBars - 6) : "",
                 '</span><span class="t">',
                 workloadBars > 17 ? unicode"▮▮▮▮▮▮" : "",
                 workloadBars < 13 ? '<span class="i">......</span>' : "",
-                workloadBars > 12 && workloadBars < 18
-                    ? getWorkloadSegment(workloadBars - 12)
-                    : "",
+                workloadBars > 12 && workloadBars < 18 ? getWorkloadSegment(workloadBars - 12) : "",
                 '</span><span class="x">',
                 workloadBars > 23 ? unicode"▮▮▮▮▮▮" : "",
                 workloadBars < 19 ? '<span class="i">......</span>' : "",
-                workloadBars > 18 && workloadBars < 24
-                    ? getWorkloadSegment(workloadBars - 18)
-                    : "",
+                workloadBars > 18 && workloadBars < 24 ? getWorkloadSegment(workloadBars - 18) : "",
                 unicode"</span> 192</span> │\n└────────────────────────────────"
                 unicode'──┘\n┌─<span class="n e">bytebeat</span>───────────────'
                 unicode'──────────┐\n│ ► <span class="n f">gonna fly now <span '
