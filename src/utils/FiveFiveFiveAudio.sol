@@ -176,6 +176,17 @@ library FiveFiveFiveAudio {
     // Helpers
     // -------------------------------------------------------------------------
 
+
+    /// @notice Returns the sound value of a note of an 8-bit synth wave with
+    /// vibrato at a given time tick.
+    /// @param _tickWad The time tick at which to get the sound value, as an 18
+    /// decimal fixed-point value.
+    /// @param _note The note to get the sound value of, where C3 is 5, and 1
+    /// corresponds to a semitone, as an 18 decimal fixed-point value.
+    /// @param _pitch The number of octaves to transpose the note by, as an 18
+    /// decimal fixed-point value.
+    /// @return The sound value of the note at the given time tick, a value in
+    /// the range `[0, 15]` (higher means louder).
     function _synth(
         uint256 _tickWad,
         uint256 _note,
@@ -183,14 +194,16 @@ library FiveFiveFiveAudio {
     ) internal pure returns (uint8) {
         // Next, calculate the vibration and sound value of the note at the
         // given `_tickWad`.
-        int256 vibration = int256(_tickWad) +
-            _sin(_tickWad.divWad(1600e18)).sMulWad(12e18);
-        int256 noteSoundValue = int256(2e18).powWad(
-            int256(_note.divWad(12e18)) - _pitch
-        );
-        int256 soundValue = int256(0.392e18).sMulWad(vibration).sMulWad(noteSoundValue) / 1e18;
+        unchecked {
+            int256 vibration = int256(_tickWad) + _sin(_tickWad.divWad(1600e18)).sMulWad(12e18);
+            int256 noteSoundValue = int256(2e18).powWad(int256(_note.divWad(12e18)) - _pitch);
+            int256 soundValue = int256(0.392e18).sMulWad(vibration).sMulWad(noteSoundValue);
+            assembly {
+                soundValue := div(soundValue, 1000000000000000000)
+            }
 
-        return uint8(uint256(soundValue.abs()) & 32) >> 1;
+            return uint8(uint256(soundValue.abs()) & 32) >> 1;
+        }
     }
 
     /// @notice An approximation of the `sin` function (with transformations)
