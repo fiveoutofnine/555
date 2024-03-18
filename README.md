@@ -2,7 +2,7 @@
 
 # 555 (1000 × ⁵⁄₉) NFTs
 
-A ⁵⁄₉-themed NFT to commemorate me running 10000km in 555 days of running everyday. For each token, in addition to displaying information about the day's run with a themeable color palette, the metadata of each token contains a 100% onchain-generated 24.832 second long audio of a 5-part arrangement of “Gonna Fly Now” by Bill Conti, popularly known as the theme song from the movie Rocky (1976), at 117.1875 BPM.
+A ⁵⁄₉-themed NFT to commemorate me running 10000km in 555 days of running everyday. For each token, in addition to displaying information about the day's run with a themeable color palette, the metadata of each token contains a 100% onchain-generated 24.832 second long audio of a 5-part arrangement of “[**Gonna Fly Now**](https://en.wikipedia.org/wiki/Gonna_Fly_Now)” by [**Bill Conti**](https://en.wikipedia.org/wiki/Bill_Conti), popularly known as the theme song from the movie [**Rocky (1976)**](https://en.wikipedia.org/wiki/Rocky), at 117.1875 BPM.
 
 https://github.com/fiveoutofnine/555/assets/66016924/fe3e8553-bc45-4810-92db-fce5f5437481
 
@@ -26,7 +26,7 @@ f=(t>>10)%776,i=f>>2,v='repeat',e='charCodeAt',o=u=>1-u**2/2+u**4/24-u**6/720,T=
 
 ### Generating the audio
 
-The audio file for this project has a sample rate of 32000Hz, and each loop is $776\cdot2^{10}$ samples long, so to generate the audio file, compute the value returned by the expression for $\texttt{t}\in[0, 776\cdot2^{10}-1]$ (you can query any range, but this is what's outputted by this project). Then, concatenate the results and prefix it with a [**WAVE file header**](http://soundfile.sapp.org/doc/WaveFormat/).
+The audio file for this project has a sample rate of 32000Hz, and each loop is $776\cdot2^{10}$ samples long, so to generate the audio file, compute the value returned by the expression for $\texttt{t}\in[0, 776\cdot2^{10}-1]$ (you can query any $\texttt{t}$, but this is what's outputted by this project). Then, concatenate the results and prefix it with a [**WAVE file header**](http://soundfile.sapp.org/doc/WaveFormat/).
 
 For practicality, the metadata returned by `tokenURI` accomplishes [**this with JavaScript**](https://github.com/fiveoutofnine/555/blob/797d9ef2890061c1c52c20acb094c9c28e17b017/src/utils/FiveFiveFiveArt.sol#L205-L231), but the same result can be yielded directly from the smart contract via [`getSoundValueAt(uint256 _tick)`](https://github.com/fiveoutofnine/555/blob/797d9ef2890061c1c52c20acb094c9c28e17b017/src/utils/FiveFiveFiveAudio.sol#L183) and [`getAudioFileWavHeader()`](https://github.com/fiveoutofnine/555/blob/797d9ef2890061c1c52c20acb094c9c28e17b017/src/utils/FiveFiveFiveAudio.sol#L152).
 
