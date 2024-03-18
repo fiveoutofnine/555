@@ -119,22 +119,27 @@ library FiveFiveFiveAudio {
     /// @return The sound value at the given time tick, a value in the range
     /// `[0, 255]` (higher means louder).
     function getSoundValueAtSample(uint256 _tick) internal pure returns (uint8) {
-        assembly {
-            _tick := mod(_tick, shl(10, 776))
-        }
-
         uint256 n64;
         uint256 n16;
         uint256 tickWad;
         assembly {
+            _tick := mod(_tick, shl(10, 776))
             n64 := mod(shr(10, _tick), 776)
             n16 := shr(2, n64)
             tickWad := mul(_tick, 1000000000000000000)
         }
 
+        /* assembly {
+            // Synth 1
+            function get_is_playing(beatmap, idx) -> ret {
+                ret := mload(add(add(0x20, beatmap), mul(0x20, shr(3, idx))))
+                beat := and(idx, 7)
+            }
+        } */
+
         // Synth 1.
-        uint256 synth1b = (uint8(SYNTH_1_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1;
-        uint256 synth1 = synth1b * _synth(tickWad, 1e18 * uint256(uint8(SYNTH_1_NOTES[n16])), 0);
+        bool synth1b = (uint8(SYNTH_1_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1 == 1;
+        uint256 synth1 = synth1b ? _synth(tickWad, 1e18 * uint256(uint8(SYNTH_1_NOTES[n16])), 0) : 0;
 
         // Synth 2.
         bool synth2b;
@@ -142,12 +147,12 @@ library FiveFiveFiveAudio {
         uint256 synth2 = synth2b ? _synth(tickWad, 1e18 * uint256(uint8(SYNTH_2_NOTES[n16])), 2e18) : 0;
 
         // Bass 1.
-        uint256 bass1b = (uint8(BASS_1_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1;
-        uint256 bass1 = bass1b * _synth(tickWad, 1e18 * uint256(uint8(BASS_1_NOTES[n16])), 4e18); 
+        bool bass1b = (uint8(BASS_1_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1 == 1;
+        uint256 bass1 = bass1b ? _synth(tickWad, 1e18 * uint256(uint8(BASS_1_NOTES[n16])), 4e18) : 0; 
 
         // Bass 2.
-        uint256 bass2b = (uint8(BASS_2_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1;
-        uint256 bass2 = bass2b * _synth(tickWad, 1e18 * uint256(uint8(BASS_2_NOTES[n16])), 4e18);
+        bool bass2b = (uint8(BASS_2_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1 == 1;
+        uint256 bass2 = bass2b ? _synth(tickWad, 1e18 * uint256(uint8(BASS_2_NOTES[n16])), 4e18) : 0;
 
         // Snare.
         bool snareb;
