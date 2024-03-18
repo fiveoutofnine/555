@@ -32,7 +32,8 @@ library FiveFiveFiveArt {
     function render(uint256 _day, IFiveFiveFive.Theme memory _theme)
         public
         pure
-        returns (string memory) {
+        returns (string memory)
+    {
         uint256 id = _day + 1;
 
         // Retrieve data for the day.

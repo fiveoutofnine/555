@@ -128,13 +128,12 @@ library FiveFiveFiveData {
             uint256 a = uint8(RUNNING_DATA[index]);
             uint256 b = uint8(RUNNING_DATA[index + 1]);
 
-            return
-                // If `_day` is even, the relevant data is stored at the first
-                // byte's 4 most significant bits, and the second byte's 8 least
-                // significant bits. Similarly, if `_day` is odd, the relevant
-                // data is stored at the first byte's 8 least significant bits,
-                // and the second byte's 4 most significant bits.
-                _day & 1 == 0 ? ((a & 0xf) << 8) | b : (a << 4) | ((b >> 4) & 0xf);
+            // If `_day` is even, the relevant data is stored at the first
+            // byte's 4 most significant bits, and the second byte's 8 least
+            // significant bits. Similarly, if `_day` is odd, the relevant
+            // data is stored at the first byte's 8 least significant bits,
+            // and the second byte's 4 most significant bits.
+            return _day & 1 == 0 ? ((a & 0xf) << 8) | b : (a << 4) | ((b >> 4) & 0xf);
         }
     }
 }
