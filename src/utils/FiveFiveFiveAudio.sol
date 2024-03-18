@@ -196,14 +196,29 @@ library FiveFiveFiveAudio {
 
     /// @notice An approximation of the `sin` function (with transformations)
     /// that composes the helper function {FiveFiveFiveAudio._cos}.
+    /// @dev Since the Taylor series approximation of `cos` is only accurate for
+    /// half the domain, this function gets the other half by negating the
+    /// result depending on which half of the domain the input is in.
     /// @param _x An 18 decimal fixed-point value.
     /// @return The approximated value of `sin(_x)` as an 18 decimal fixed-point
     /// value.
     function _sin(uint256 _x) internal pure returns (int256) {
-        return
-            _cos(int256(_x % 4e18) - 2e18).sMulWad(
-                1e18 * (int256(((_x / 1e18) & 3) >> 2) - 1)
-            );
+        // `a` is the term to pass into the `_cos` function (before translating
+        // right by 2), and `b` is the coefficient to negate the result of the
+        // `_cos` function.
+        int256 a;
+        int256 b;
+        assembly {
+            a := mod(_x, 4000000000000000000)
+            b := add(mul(gt(and(div(_x, 1000000000000000000), 3), 2), sub(not(0), 1)), 1)
+        }
+
+        // Whether to negate the result of the `_cos` function (because we only
+        // get half the range from the Taylor series approximation).
+
+        unchecked {
+            return b * _cos(a - 2e18);
+        }
     }
 
     /// @notice Returns a 4-term Taylor series approximation for the `cos`
