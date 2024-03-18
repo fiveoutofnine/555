@@ -122,16 +122,20 @@ library FiveFiveFiveAudio {
         uint256 n64;
         uint256 n16;
         uint256 tickWad;
+        uint256 n64x;
+        uint256 n64y;
         assembly {
             _tick := mod(_tick, shl(10, 776))
             n64 := mod(shr(10, _tick), 776)
             n16 := shr(2, n64)
             tickWad := mul(_tick, 1000000000000000000)
+            n64x := shr(3, n64)
+            n64y := and(n64, 7)
         }
 
-        // Synth 1.
         unchecked {
-            bool synth1b = (uint8(SYNTH_1_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1 == 1;
+            // Synth 1.
+            bool synth1b = (uint8(SYNTH_1_BEATMAP[n64x]) >> n64y) & 1 == 1;
             uint256 synth1 = synth1b ? _synth(tickWad, 1e18 * uint256(uint8(SYNTH_1_NOTES[n16])), 0) : 0;
 
             // Synth 2.
@@ -140,11 +144,11 @@ library FiveFiveFiveAudio {
             uint256 synth2 = synth2b ? _synth(tickWad, 1e18 * uint256(uint8(SYNTH_2_NOTES[n16])), 2e18) : 0;
 
             // Bass 1.
-            bool bass1b = (uint8(BASS_1_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1 == 1;
+            bool bass1b = (uint8(BASS_1_BEATMAP[n64x]) >> n64y) & 1 == 1;
             uint256 bass1 = bass1b ? _synth(tickWad, 1e18 * uint256(uint8(BASS_1_NOTES[n16])), 4e18) : 0; 
 
             // Bass 2.
-            bool bass2b = (uint8(BASS_2_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1 == 1;
+            bool bass2b = (uint8(BASS_2_BEATMAP[n64x]) >> n64y) & 1 == 1;
             uint256 bass2 = bass2b ? _synth(tickWad, 1e18 * uint256(uint8(BASS_2_NOTES[n16])), 4e18) : 0;
 
             // Snare.
