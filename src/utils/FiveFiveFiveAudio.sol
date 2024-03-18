@@ -129,52 +129,45 @@ library FiveFiveFiveAudio {
             tickWad := mul(_tick, 1000000000000000000)
         }
 
-        /* assembly {
-            // Synth 1
-            function get_is_playing(beatmap, idx) -> ret {
-                ret := mload(add(add(0x20, beatmap), mul(0x20, shr(3, idx))))
-                beat := and(idx, 7)
-            }
-        } */
-
         // Synth 1.
-        bool synth1b = (uint8(SYNTH_1_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1 == 1;
-        uint256 synth1 = synth1b ? _synth(tickWad, 1e18 * uint256(uint8(SYNTH_1_NOTES[n16])), 0) : 0;
+        unchecked {
+            bool synth1b = (uint8(SYNTH_1_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1 == 1;
+            uint256 synth1 = synth1b ? _synth(tickWad, 1e18 * uint256(uint8(SYNTH_1_NOTES[n16])), 0) : 0;
 
-        // Synth 2.
-        bool synth2b;
-        assembly { synth2b := and(synth1b, and(gt(n16, 15), lt(n16, 166))) }
-        uint256 synth2 = synth2b ? _synth(tickWad, 1e18 * uint256(uint8(SYNTH_2_NOTES[n16])), 2e18) : 0;
+            // Synth 2.
+            bool synth2b;
+            assembly { synth2b := and(synth1b, and(gt(n16, 15), lt(n16, 166))) }
+            uint256 synth2 = synth2b ? _synth(tickWad, 1e18 * uint256(uint8(SYNTH_2_NOTES[n16])), 2e18) : 0;
 
-        // Bass 1.
-        bool bass1b = (uint8(BASS_1_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1 == 1;
-        uint256 bass1 = bass1b ? _synth(tickWad, 1e18 * uint256(uint8(BASS_1_NOTES[n16])), 4e18) : 0; 
+            // Bass 1.
+            bool bass1b = (uint8(BASS_1_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1 == 1;
+            uint256 bass1 = bass1b ? _synth(tickWad, 1e18 * uint256(uint8(BASS_1_NOTES[n16])), 4e18) : 0; 
 
-        // Bass 2.
-        bool bass2b = (uint8(BASS_2_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1 == 1;
-        uint256 bass2 = bass2b ? _synth(tickWad, 1e18 * uint256(uint8(BASS_2_NOTES[n16])), 4e18) : 0;
+            // Bass 2.
+            bool bass2b = (uint8(BASS_2_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1 == 1;
+            uint256 bass2 = bass2b ? _synth(tickWad, 1e18 * uint256(uint8(BASS_2_NOTES[n16])), 4e18) : 0;
 
-        // Snare.
-        bool snareb;
-        assembly { snareb := and(gt(n16, 58), lt(n16, 178)) }
-        uint256 snarebi = snareb ? n64 - 236 : 0;
-        uint256 snareb1 = (uint8(SNARE_BEATMAP[snarebi >> 3]) >> (7 - (snarebi & 7))) & 1;
-        assembly { snareb := and(snareb, snareb1) }
-        // ((2e11*(t/(1<<14))**2)&255)/5
-        uint256 snareV = uint256(2e29).mulWad(tickWad.divWad(1e18 << 14));
-        uint256 snare = snareb
-            ? ((snareV.mulWad(snareV) / 1e18) & 255) / 10
-            : 0;
+            // Snare.
+            bool snareb;
+            assembly { snareb := and(gt(n16, 58), lt(n16, 178)) }
+            uint256 snarebi = snareb ? n64 - 236 : 0;
+            uint256 snareb1 = (uint8(SNARE_BEATMAP[snarebi >> 3]) >> (7 - (snarebi & 7))) & 1;
+            assembly { snareb := and(snareb, snareb1) }
+            uint256 snareV = uint256(2e29).mulWad(tickWad.divWad(1e18 << 14));
+            uint256 snare = snareb
+                ? ((snareV.mulWad(snareV) / 1e18) & 255) / 10
+                : 0;
 
-        // Glissando.
-        uint256 glissando = n16 > 165 && n16 < 174
-            ? _synth(tickWad, 1e18 * uint256(uint8(SYNTH_GLISSANDO[(n64 >> 1) - 332])), 0)
-            : 0;
+            // Glissando.
+            uint256 glissando = n16 > 165 && n16 < 174
+                ? _synth(tickWad, 1e18 * uint256(uint8(SYNTH_GLISSANDO[(n64 >> 1) - 332])), 0)
+                : 0;
 
-        // Ending note.
-        uint256 ending = n16 > 173 ? _synth(tickWad, 21e18, 0) : 0;
+            // Ending note.
+            uint256 ending = n16 > 173 ? _synth(tickWad, 21e18, 0) : 0;
 
-        return uint8(synth1 + synth2 + bass1 + bass2 + snare + glissando + ending);
+            return uint8(synth1 + synth2 + bass1 + bass2 + snare + glissando + ending);
+        }
     }
 
     // -------------------------------------------------------------------------
