@@ -288,7 +288,7 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
             });
         }
 
-        return FiveFiveFiveArt.render({_day: _id - 1, _theme: theme});
+        return FiveFiveFiveArt.render({ _day: _id - 1, _theme: theme });
     }
 
     // -------------------------------------------------------------------------
