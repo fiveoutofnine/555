@@ -19,6 +19,63 @@ library FiveFiveFiveAudio {
     using Math for uint256;
 
     // -------------------------------------------------------------------------
+    // Constants
+    // -------------------------------------------------------------------------
+
+    bytes internal constant SYNTH_1_BEATMAP =
+        hex"fefeeefeeefeeefefefeeefeeefeeefe00feeefeefeefffefefeeeefeffffeeffe"
+        hex"fffffffffffeeffefffffffffffeeffefffffffffffeeffefffffffffffffffe00"
+        hex"eeffeeeffffffe00eefeefeefffefefefefefefefeffffffffffffffffffff";
+
+    bytes internal constant SYNTH_1_NOTES =
+        hex"05050505050505050505090905050505090909090909090909090c0c0909090909"
+        hex"090909090909090909090909090909090909090909090909090909090915181818"
+        hex"1a1a1a1a1a1a1a1a1a1a1a1a1a1c1c1c151515151515151515151515151818181a"
+        hex"1a1a1a1a1a1a1a1a1a1a1a1a1c1c1c151515151515151515151515151515151515"
+        hex"070507070705070909090909090911111111111111111111111111111616151515"
+        hex"1515151515151515151515151515151515151515151515151515151515";
+
+    bytes internal constant SYNTH_2_NOTES =
+        hex"080808080808080808080808080808081d1d1d1d1d1d1d1d1d1d21211d1d1d1d1c"
+        hex"1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c21242424"
+        hex"212121212121212121212121262828281d1d1d1d1d1d1d1d1d1d1d1d2124242421"
+        hex"212121212121212121212126282828212121212121212121212121212121212121"
+        hex"1f1d1f1f1f1d1f212121212121211d1d1d1d1c1c1c1a1a1a181818181d1d1d1d1d"
+        hex"1d";
+
+    bytes internal constant BASS_1_BEATMAP =
+        hex"0000000000000000000000000000000000000000000000fffefffffffffffffffe"
+        hex"fffefffefffefffefffefffefffefffefffefffefffefffefffefffefffefffeff"
+        hex"fefffefffefffe00eefeefeefffefefefeeffefeefffffffffffffffffffff";
+
+    bytes internal constant BASS_1_NOTES =
+        hex"080808080808080808080808080808080808080808080808080808080808080808"
+        hex"080808080808080808080808082e2e2e2e2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d"
+        hex"2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e303030303030303030303030303030302e"
+        hex"2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e303030303030303030303030303030303232"
+        hex"323232323232303030303030303032323232323232323232303030303030303030"
+        hex"3030303030303030303030303030303030303030303030303030303030";
+
+    bytes internal constant BASS_2_BEATMAP =
+        hex"0000000000000000000000000000000000fffffffffffefffefffffffffffffffe"
+        hex"fefefffeeefefefefefefffeeefefefefefeffeeeefefefefefeffeeeefeeeeeff"
+        hex"ffffeefeffefeefeffffffeefeeeeefeeefefefefeffffffffffffffffffff";
+
+    bytes internal constant BASS_2_NOTES =
+        hex"080808080808080808080808080808080808080808080808080808080808080808"
+        hex"082828282828282828282828282222222221212121212121212121212121212121"
+        hex"1f1f1d1d1f1f1f1f29292a2a2b2b1f1f21211f1f212121212b2b2c2c2d2d21211f"
+        hex"1f1d1d1f1f1f2629262a2a2b2b1f1f21211f1f212121282b282c2c2d28211d1f1f"
+        hex"1f1f1f1f1f1f21212121212121212222222222222222222e2e2e2e22222221212d"
+        hex"2d2d2d2d2d212121212121212121212121212121212121212121212121";
+
+    bytes internal constant SNARE_BEATMAP =
+        hex"ee0e0e0e000e0000000e000e000e0000000e000e000e0000000e000e000e0000000e000e000e0000000e000e000e0000000e000e0e0e0e0e0e0e0000";
+
+    bytes internal constant SYNTH_GLISSANDO =
+        hex"0507090a0c0e101113151617191b1c1e";
+
+    // -------------------------------------------------------------------------
     // Functions
     // -------------------------------------------------------------------------
 
@@ -61,7 +118,102 @@ library FiveFiveFiveAudio {
     /// @return The sound value at the given time tick, a value in the range
     /// `[0, 255]` (higher means louder).
     function getSoundValueAtSample(uint256 _tick) internal pure returns (uint8) {
-        // TODO
-        return uint8(_tick);
+        assembly {
+            _tick := mod(_tick, shl(10, 776))
+        }
+
+        uint256 n64;
+        uint256 n16;
+        assembly {
+            n64 := mod(shr(10, _tick), 776)
+            n16 := shr(2, n64)
+        }
+
+        // Synth 1.
+        uint256 synth1b = (uint8(SYNTH_1_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1;
+        uint256 synth1 = synth1b * _synth(_tick, 1e18 * uint256(uint8(SYNTH_1_NOTES[n16])), 0);
+
+        // Synth 2.
+        bool synth2b;
+        assembly { synth2b := and(synth1b, and(gt(n16, 15), lt(n16, 166))) }
+        uint256 synth2 = synth2b ? _synth(_tick, 1e18 * uint256(uint8(SYNTH_2_NOTES[n16])), 2e18) : 0;
+
+        // Bass 1.
+        uint256 bass1b = (uint8(BASS_1_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1;
+        uint256 bass1 = bass1b * _synth(_tick, 1e18 * uint256(uint8(BASS_1_NOTES[n16])), 4e18); 
+
+        // Bass 2.
+        uint256 bass2b = (uint8(BASS_2_BEATMAP[n64 >> 3]) >> (7 - (n64 & 7))) & 1;
+        uint256 bass2 = bass2b * _synth(_tick, 1e18 * uint256(uint8(BASS_2_NOTES[n16])), 4e18);
+
+        // Snare.
+        bool snareb;
+        assembly { snareb := and(gt(n16, 58), lt(n16, 178)) }
+        uint256 snarebi = snareb ? n64 - 236 : 0;
+        uint256 snareb1 = (uint8(SNARE_BEATMAP[snarebi >> 3]) >> (7 - (snarebi & 7))) & 1;
+        assembly { snareb := and(snareb, snareb1) }
+        // ((2e11*(t/(1<<14))**2)&255)/5
+        uint256 snareV = uint256(2e29).mulWad((_tick * 1e18).divWad(1e18 << 14));
+        uint256 snare = snareb
+            ? ((snareV.mulWad(snareV) / 1e18) & 255) / 10
+            : 0;
+
+        // Glissando.
+        uint256 glissando = n16 > 165 && n16 < 174
+            ? _synth(_tick, 1e18 * uint256(uint8(SYNTH_GLISSANDO[(n64 >> 1) - 332])), 0)
+            : 0;
+
+        // Ending note.
+        uint256 ending = n16 > 173 ? _synth(_tick, 21e18, 0) : 0;
+
+        return uint8(synth1 + synth2 + bass1 + bass2 + snare + glissando + ending);
+    }
+
+    // -------------------------------------------------------------------------
+    // Helpers
+    // -------------------------------------------------------------------------
+
+    function _synth(
+        uint256 _tick,
+        uint256 _note,
+        int256 _pitch
+    ) internal pure returns (uint8) {
+        // First, convert `_tick` to a fixed-point value.
+        uint256 tickWad = _tick * 1e18;
+
+        // Next, calculate the vibration and sound value of the note at the
+        // given `_tick`.
+        int256 vibration = int256(tickWad) +
+            _sin(tickWad.divWad(1600e18)).sMulWad(12e18);
+        int256 noteSoundValue = int256(2e18).powWad(
+            int256(_note.divWad(12e18)) - _pitch
+        );
+        int256 soundValue = int256(0.392e18).sMulWad(vibration).sMulWad(noteSoundValue) / 1e18;
+
+        return uint8(uint256(soundValue.abs()) & 32) >> 1;
+    }
+
+    function _sin(uint256 _x) internal pure returns (int256) {
+        return
+            _cos(int256(_x % 4e18) - 2e18).sMulWad(
+                1e18 * (int256(((_x / 1e18) & 3) >> 2) - 1)
+            );
+    }
+
+    function _cos(int256 _x) internal pure returns (int256) {
+        // First, calculate the 2nd, 4th, and 6th powers of `_x`.
+        int256 x2 = _x.sMulWad(_x);
+        int256 x4 = x2.sMulWad(x2);
+        int256 x6 = x2.sMulWad(x4);
+
+        // Next, calculate the 1st, 2nd, and 3rd terms of the Taylor series
+        // expansion of `cos(x)` around `x = 0`.
+        int256 t1 = x2.sDivWad(2e18);
+        int256 t2 = x4.sDivWad(24e18);
+        int256 t3 = x6.sDivWad(720e18);
+
+        // Finally, calculate the value of `cos(x)` using the Taylor series
+        // expansion.
+        return 1e18 - t1 + t2 - t3;
     }
 }

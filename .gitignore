@@ -19,6 +19,7 @@ script/preview/
 # Script output files
 /output/svg/**
 /output/txt/**
+/output/wav/**
 
 # Mac
 .DS_STORE
