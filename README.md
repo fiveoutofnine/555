@@ -64,7 +64,7 @@ and the bytecode
 
 ### `FiveFiveFiveArt`
 
-`FiveFiveFiveArt` was deployed to [`0x3f2666d91f3047314402b8A482bAaAe3fFdF1b78`] with the salt
+`FiveFiveFiveArt` was deployed to [`0x3f2666d91f3047314402b8A482bAaAe3fFdF1b78`](https://basescan.org/address/0x3f2666d91f3047314402b8A482bAaAe3fFdF1b78) with the salt
 
 ```
 0x0000000000000000000000000000000000000000000000000000000000000000
