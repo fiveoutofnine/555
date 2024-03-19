@@ -50,7 +50,7 @@ All 3 contracts were compiled with the compiler version `v0.8.21+commit.d9974bed
 
 ### `FiveFiveFive`
 
-`FiveFiveFive` was deployed to [`0x555555554F0ef522f41B2C46D941DEB4d731eB65`](https://basescan.org/address/0x555555554F0ef522f41B2C46D941DEB4d731eB65) through the `ImmutableCreate2Factory` at[`0x0000000000FFe8B47B3e2130213B802212439497`](https://basescan.org/address/0x0000000000FFe8B47B3e2130213B802212439497) with the salt
+`FiveFiveFive` was deployed to [`0x555555554F0ef522f41B2C46D941DEB4d731eB65`](https://basescan.org/address/0x555555554F0ef522f41B2C46D941DEB4d731eB65) with the salt
 
 ```
 0xa85572cd96f1643458f17340b6f0d6549af482f5e2cfb88de1ab65fff1bb9fa8
@@ -64,7 +64,7 @@ and the bytecode
 
 ### `FiveFiveFiveArt`
 
-`FiveFiveFiveArt` was deployed to [`0x3f2666d91f3047314402b8A482bAaAe3fFdF1b78`](https://basescan.org/address/0x3f2666d91f3047314402b8A482bAaAe3fFdF1b78) through the `ImmutableCreate2Factory` at[`0x0000000000FFe8B47B3e2130213B802212439497`](https://basescan.org/address/0x0000000000FFe8B47B3e2130213B802212439497) with the salt
+`FiveFiveFiveArt` was deployed to [`0x3f2666d91f3047314402b8A482bAaAe3fFdF1b78`] with the salt
 
 ```
 0x0000000000000000000000000000000000000000000000000000000000000000
@@ -78,7 +78,7 @@ and the bytecode
 
 ### `FiveFiveFiveConstants`
 
-`FiveFiveFiveConstants` was deployed to [`0x15a6c830e04646CEe9dB230135fE3b1b910B4df7`](https://basescan.org/address/0x15a6c830e04646CEe9dB230135fE3b1b910B4df7) through the `ImmutableCreate2Factory` at[`0x0000000000FFe8B47B3e2130213B802212439497`](https://basescan.org/address/0x0000000000FFe8B47B3e2130213B802212439497) with the salt
+`FiveFiveFiveConstants` was deployed to [`0x15a6c830e04646CEe9dB230135fE3b1b910B4df7`](https://basescan.org/address/0x15a6c830e04646CEe9dB230135fE3b1b910B4df7) with the salt
 
 ```
 0x0000000000000000000000000000000000000000000000000000000000000000
