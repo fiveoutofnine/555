@@ -206,7 +206,7 @@ cast create2 \
 7. Verify `FiveFiveFive`.
 
 ```sh
-forge verify-contract $FIVE_FIVE_FIVE src/utils/FiveFiveFiveArt.sol:FiveFiveFiveArt \
+forge verify-contract $FIVE_FIVE_FIVE src/utils/FiveFiveFive.sol:FiveFiveFive \
     --libraries "src/utils/FiveFiveFiveConstants.sol:FiveFiveFiveConstants:${FIVE_FIVE_FIVE_CONSTANTS}" \
     --libraries "src/utils/FiveFiveFiveArt.sol:FiveFiveFiveArt:${FIVE_FIVE_FIVE_ART}" \
     --chain-id 8453 \
