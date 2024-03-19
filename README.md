@@ -4,7 +4,7 @@
 
 A ⁵⁄₉-themed NFT to commemorate me running 10000km in 555 days of running everyday.
 
-$$\texttt{0xA85572Cd96f1643458f17340b6f0D6549Af482F5}$$
+$$\texttt{0xA85572Cd96f1643458f17340b6f0D6549Af482F5}\\\textrm{\small Base}$$
 
 For each token, in addition to displaying information about the day's run with a themeable color palette, the metadata of each token contains a 100% onchain-generated 24.832 second long audio of a [**5-part arrangement**](https://github.com/fiveoutofnine/555/blob/assets/8-bit-rocky.pdf) of “[**Gonna Fly Now**](https://en.wikipedia.org/wiki/Gonna_Fly_Now)” by [**Bill Conti**](https://en.wikipedia.org/wiki/Bill_Conti), popularly known as the theme song from the movie [**Rocky (1976)**](https://en.wikipedia.org/wiki/Rocky), at 117.1875 BPM.
 
