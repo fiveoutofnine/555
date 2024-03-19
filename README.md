@@ -158,7 +158,7 @@ forge verify-contract $FIVE_FIVE_FIVE_CONSTANTS src/utils/FiveFiveFiveConstants.
     --num-of-optimizations 55555555 \
     --compiler-version "0.8.21+commit.d9974bed" \
     --etherscan-api-key $BASESCAN_API_KEY \
-    --verifier-url "https://api-sepolia.basescan.org/api" \
+    --verifier-url "https://api.basescan.org/api" \
     --watch
 ```
 
@@ -173,12 +173,12 @@ forge inspect src/utils/FiveFiveFiveArt.sol:FiveFiveFiveArt bytecode \
 
 ```sh
 forge verify-contract $FIVE_FIVE_FIVE_Art src/utils/FiveFiveFiveArt.sol:FiveFiveFiveArt \
-    --libraries "src/utils/FiveFiveFiveConstants.sol:FiveFiveFiveConstants:${FIVE_FIVE_FIVE_CONSTANTS}"
+    --libraries "src/utils/FiveFiveFiveConstants.sol:FiveFiveFiveConstants:${FIVE_FIVE_FIVE_CONSTANTS}" \
     --chain-id 8453 \
     --num-of-optimizations 55555555 \
     --compiler-version "0.8.21+commit.d9974bed" \
     --etherscan-api-key $BASESCAN_API_KEY \
-    --verifier-url "https://api-sepolia.basescan.org/api" \
+    --verifier-url "https://api.basescan.org/api" \
     --watch
 ```
 
@@ -207,13 +207,13 @@ cast create2 \
 
 ```sh
 forge verify-contract $FIVE_FIVE_FIVE src/utils/FiveFiveFiveArt.sol:FiveFiveFiveArt \
-    --libraries "src/utils/FiveFiveFiveConstants.sol:FiveFiveFiveConstants:${FIVE_FIVE_FIVE_CONSTANTS}"
-    --libraries "src/utils/FiveFiveFiveArt.sol:FiveFiveFiveArt:${FIVE_FIVE_FIVE_ART}"
+    --libraries "src/utils/FiveFiveFiveConstants.sol:FiveFiveFiveConstants:${FIVE_FIVE_FIVE_CONSTANTS}" \
+    --libraries "src/utils/FiveFiveFiveArt.sol:FiveFiveFiveArt:${FIVE_FIVE_FIVE_ART}" \
     --chain-id 8453 \
     --num-of-optimizations 55555555 \
     --compiler-version "0.8.21+commit.d9974bed" \
     --etherscan-api-key $BASESCAN_API_KEY \
-    --verifier-url "https://api-sepolia.basescan.org/api" \
+    --verifier-url "https://api.basescan.org/api" \
     --watch
 ```
 
