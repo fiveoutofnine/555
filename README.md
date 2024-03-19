@@ -79,10 +79,20 @@ forge script script/PrintData.s.sol:PrintDataScript -vvv --via-ir
 
 To generate the [**optimized font files**](https://github.com/fiveoutofnine/555/blob/c4ef5ab0e110895105a061fd6bc0b174b776dabb/src/utils/FiveFiveFiveConstants.sol#L16), see [**GENERATING_FONTS.md**](https://github.com/fiveoutofnine/555/blob/main/GENERATING_FONTS.md).
 
-### Sample art (SVG and HTML) and metadata generation
+### Testing
+
+To run tests, run the following command:
+
+```sh
+forge test
+```
 
 To generate and write the base64-encoded JSON outputs to `./output/txt/{token_id}.txt`, follow the instructions in [`GenerateAudioOutputScript`](https://github.com/fiveoutofnine/555/blob/main/script/GenerateAudioOutput.s.sol) and run the following command:
 
 ```sh
 forge script script/GenerateAudioOutput.s.sol:GenerateAudioOutput -vvv --via-ir
 ```
+
+## Disclaimer
+
+_These smart contracts are being provided as is. No guarantee, representation or warranty is being made, express or implied, as to the safety or correctness of the user interface or the smart contracts. They have not been audited and as such there can be no assurance they will work as intended, and users may experience delays, failures, errors, omissions, loss of transmitted information or loss of funds. The creators are not liable for any of the foregoing. Users should proceed with caution and use at their own risk._

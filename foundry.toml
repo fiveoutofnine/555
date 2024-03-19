@@ -4,6 +4,7 @@ out = "out"
 libs = ["lib"]
 solc = "0.8.21"
 via-ir = true
+optimizer_runs = 55_555_555
 fs_permissions = [
     { access = "read-write", path = "./deployments/31337/data" },
     { access = "read", path = "./out" },

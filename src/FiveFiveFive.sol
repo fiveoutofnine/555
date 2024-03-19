@@ -134,14 +134,13 @@ contract FiveFiveFive is IFiveFiveFive, ERC721, Owned {
         uint256 tokenId = _nextTokenId;
 
         // Minting is complete.
-        if (tokenId > 555) revert MintingEnded();
+        if (tokenId > 554) revert MintingEnded();
         // Revert if the sender didn't supply enough funds.
         if (msg.value < PRICE) revert InsufficientFunds();
 
         // Increment the next token ID;
         unchecked {
-            _nextTokenId = tokenId
-                + (tokenId == 374 || tokenId == 458 || tokenId == 554 ? 2 : 1);
+            _nextTokenId = tokenId + (tokenId == 374 || tokenId == 458 ? 2 : 1);
         }
 
         // Mint token.
