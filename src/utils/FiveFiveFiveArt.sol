@@ -238,7 +238,7 @@ library FiveFiveFiveArt {
             jsonData = abi.encodePacked(
                 '{"name":"555 | Day #',
                 id.toString(),
-                unicode'","description":"⁵⁄₉ ran ',
+                '","description":"5/9 ran ',
                 km.toString(),
                 ".",
                 // 0-pad m portion of distance to 2 digits. Since the data only
@@ -250,13 +250,17 @@ library FiveFiveFiveArt {
                 id.toString(),
                 '.","image_data":"data:image/svg+xml;charset=utf-8;base64,',
                 Base64.encode(svgData),
-                '","animation_data":"data:text/html;charset=utf-8;base64,',
+                '","animation_url":"data:text/html;charset=utf-8;base64,',
                 Base64.encode(htmlData),
                 '","attributes":[{"trait_type":"day","value":',
                 id.toString(),
                 '},{"trait_type":"mileage (km)","value":',
                 km.toString(),
                 ".",
+                // 0-pad m portion of distance to 2 digits. Since the data only
+                // has granularity to the 0.01th of a kilometer, we never need
+                // to pad to more.
+                m < 10 ? "0" : "",
                 m.toString(),
                 '},{"trait_type":"location","value":"',
                 locationName,
@@ -265,7 +269,7 @@ library FiveFiveFiveArt {
         }
 
         // Return token URI.
-        return string.concat("data:json/application;base64,", Base64.encode(jsonData));
+        return string.concat("data:application/json;base64,", Base64.encode(jsonData));
     }
 
     /// @notice Helper function to render each segment of the workload gradient
